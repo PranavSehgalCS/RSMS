@@ -16,7 +16,10 @@ body{
     background-color: #ffb356;
     font-family: “Comic Sans MS”, “Comic Sans”;
 }
-
+br {
+    display: block;
+    margin-bottom: 0em;
+}
 .container_head{
     font-size: 36px;
     color: aliceblue;
@@ -37,7 +40,7 @@ body{
 
 
 .container_title{
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     font-family: “Comic Sans MS”, “Comic Sans”, cursive;
 }
 .container_box{
