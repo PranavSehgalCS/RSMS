@@ -1,20 +1,33 @@
 
 <body>
-
+    <br>
+    <p class = "container_head"> Welcome To Admin Dashboard</p>
     <div class="page_container">
-        <div class = "container_line"><p class = "">Welcome to user dashboard :)</p></div><br>
-
-        <div class = "container_line">
-            <button type="button" class="bubbleBox" (click)="usrName()">set title </button>
-            <button type="button" class="bubbleBox" (click)="directButton('accountpage',3)">Account Page </button>
-            <button type="button" class="bubbleBox" (click)="directButton('dashboard',-1)"> NO LINK</button>
-            <button type="button" class="bubbleBox" (click)="directButton('dashboard',-1)"> NO LINK</button>
-            <br>
-            <button type="button" class="bubbleBox" (click)="usrName()">Set title t</button>
-            <button type="button" class="bubbleBox" (click)="directButton('accountpage',-1)"> NO LINK</button>
-            <button type="button" class="bubbleBox" (click)="directButton('dashboard',-1)"> NO LINK</button>
-            <button type="button" class="bubbleBox" (click)="directButton('dashboard',-1)"> NO LINK</button>
+         
+        <div class = "container_box">
+            <div class="container_title">Product Utilities</div>  
+            <button type="button" class="buttonBox" (click)="directButton('dashboard',1)"> View Product List</button>
+            <button type="button" class="buttonBox" (click)="directButton('dashboard',1)"> Create New Product </button>
+            <button type="button" class="buttonBox" (click)="directButton('dashboard',1)"> Manage  Product</button>
+            <br><br>
+        </div>
+        <div class = "container_box">
+            <div class="container_title">Company Utilities</div>       
+            <button type="button" class="buttonBox" (click)="directButton('companies/view',2)"> View Company List</button>
+            <button type="button" class="buttonBox" (click)="directButton('companies/create',2)"> Create New Company</button>
+            <button type="button" class="buttonBox" (click)="directButton('companies/edit',2)"> Manage Companies</button>
+        </div>
+        <div class = "container_box">
+            <div class="container_title">Category Utilities</div>  
+            <button type="button" class="buttonBox" (click)="directButton('categories',3)"> View Category List</button>
+            <button type="button" class="buttonBox" (click)="directButton('categories/',3)"> Create New Category</button>
+            <button type="button" class="buttonBox" (click)="directButton('dashboard',3)"> Manage Category </button>
+        </div>
+        <div></div>
+        <div class = "container_box">
+        <button type="button" class="buttonBox" (click)="usrName()">set title </button>
+        <button type="button" class="buttonBox" (click)="directButton('accountpage',3)">Account Page </button>
         </div>
     </div>
-
+    <br><br>
 </body>

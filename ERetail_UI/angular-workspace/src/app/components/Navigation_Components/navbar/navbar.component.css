@@ -1,14 +1,15 @@
 .topnav {
     overflow: hidden;
     background-color: #adaa9a;
+    border-radius: 24px;
 }
 
 .topnav a {
     float: left;
     border: black;
     border-width: 1cm;
-    margin: 1px;
-    font-size: 18px;
+    margin: 2px;
+    font-size: 22px;
     text-decoration: none;
     color: #000000;
     text-align: center;
@@ -32,7 +33,7 @@
 
 .topnav needsLogout {
     float: right;
-    font-size: 14px;
+    font-size: 22px;
     color: #000000;
     padding: 24px 36px;
     border-radius: 5px;
@@ -45,14 +46,14 @@
     cursor: pointer;
     padding: 28px 44px;
     border-radius: 60px;
-    transition-duration: 0.25s;
+    transition-duration: 0.2s;
     background-color: #e90000;
     
 }
 
 .topnav needsLogin {
     float: right;
-    font-size: 14px;
+    font-size: 22px;
     text-align: center;
     padding: 24px 48px;
     border-radius: 5px;
@@ -65,7 +66,7 @@
     content: 'LOLL';
     padding: 30px 52.5px;
     border-radius: 60px;
-    transition-duration: 0.25s;
+    transition-duration: 0.2s;
     background-color: #4eca28;
 }
 
@@ -77,7 +78,8 @@
 
 .topnav pwdChange {
     float: right;
-    font-size: 17px;
+    margin-right: 5px;
+    font-size: 20px;
     text-align: center;
     padding: 14px 36px;
     border-radius: 5px;
@@ -87,7 +89,6 @@
 .topnav pwdChange:hover {
     color: black;
     cursor: pointer;
-    content: "LOL";
     padding: 20px 36px;
     border-radius: 60px;
     transition-duration: 0.25s;
