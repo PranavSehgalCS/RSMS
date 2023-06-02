@@ -1,0 +1,7 @@
+[   {"id":0,"username":"No Account", "password":" ","isAdmin":"false"},
+    {"id":1,"username":"Wrong Match", "password":" ","isAdmin":"false"},
+    {"id":2,"username":"No DB Connection", "password":" ","isAdmin":"false"}, 
+    {"id":3,"username":"User Taken", "password":" ","isAdmin":"false"},
+    {"id":4, "username":"pranav", "password":"pranav", "isAdmin":"true"},
+    {"id":5,"username":"", "password":"","isAdmin":"true"}
+]

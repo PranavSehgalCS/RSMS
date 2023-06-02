@@ -1,0 +1,33 @@
+
+<div class="topnav">
+    <div *ngIf="isLoggedIn() && !isAdmin()">
+        <a [ngClass]="{'active': id === -1}" id="-1" routerLink="/dashboard_false" (click)="addClass(id=-1)">Dashboard2</a>
+    </div> 
+
+    <div *ngIf="isLoggedIn() && isAdmin()">
+        <a [ngClass]="{'active': id === 0}" id="0" routerLink="/dashboard" (click)="addClass(id=0)">Dashboard</a>
+        <a [ngClass]="{'active': id === 1}" id="1" routerLink="/create product" (click)="addClass(id=1)">Create Product</a>
+        <a [ngClass]="{'active': id === 2}" id="2" routerLink="/manage product/" (click)="addClass(id=2)">Manage Product</a>
+
+    </div>
+    <div *ngIf="isLoggedIn()">
+        <needsLogout class="logout" [ngClass]="{'active': id === 5}" id="=" routerLink="/login" (click)="logout()">Logout<br></needsLogout>
+        <pwdChange class = "changepwd" [ngClass]="{'active': id === 3}" id="3" routerLink="/accountpage" (click)="addClass(id=3)">Account<br>Page</pwdChange>
+    </div>
+    <div *ngIf="!isLoggedIn()">
+        <needsLogin class="login"  [ngClass]="{'active': id === 6}" id="6" routerLink="/login" (click)="addClass(id=6)">Login</needsLogin>
+    </div>
+    <a *ngIf="isAdmin()" [ngClass]="{'active': id === 7}" id="7" routerLink="/adminOrders" (click)="addClass(id=7)">BLANK HOLDER</a>
+
+</div>
+
+<!--
+id 0 = dashboard
+id 1 = Add product
+id 2 = Manage Product
+id 3 = Account Page
+id 4 = admin page
+id 5 = logout
+id 6 = login
+id 7 =
+-->

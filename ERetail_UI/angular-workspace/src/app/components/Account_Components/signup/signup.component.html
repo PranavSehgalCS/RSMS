@@ -1,0 +1,28 @@
+<head><title>Login</title>></head>
+
+<body>
+    <div class="container">
+        <form class="form" id="login">
+            <h1 class="form__title">Create Account</h1>
+            <div id = "error_Message" class="form__message form__message--error">{{messageService.errorMsg}}</div>
+            <div class="form__input-group">
+                <input #userName type="Username" class="form__input" autofocus placeholder="Username">
+                <div class="form__input-error-message"></div>
+            </div>
+
+            <div class="form__input-group">
+                <input #password type="Password" class="form__input" autofocus placeholder="Password">
+                <div class="form__input-error-message"></div>
+            </div>
+
+            <div class="form__input-group">
+                <input #passwordAgain type="Password" class="form__input" autofocus placeholder="Repeat Password">
+                <div class="form__input-error-message"></div>
+            </div>
+            <button class="form__button" type="button" (click)="submitThisForm(userName.value,password.value,passwordAgain.value)">Continue</button>
+            <p class="form__text">
+                <a routerLink="/login" href = "/login" class="form__link">Already have an account? Log In!</a>
+            </p>
+        </form>
+    </div>
+</body>

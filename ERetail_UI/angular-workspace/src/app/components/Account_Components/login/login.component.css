@@ -1,0 +1,138 @@
+body {
+    --color-primary: #01bb99;
+    --color-primary-dark: #09937a;
+    --color-secondary: #1e2562;
+    --color-error: #cc3333;
+    --color-success: #4bb544;
+    --color-mypurple: #da89f8;
+    --border-radius: 32px;
+
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    font-size: 24px;
+    background:  #ffb356;
+    background-size: cover;
+}
+.container {
+    align-content: center;
+    width: 450px;
+    max-width: 450px;
+    margin: 1rem;
+    padding: 2.5rem 5rem;
+    box-shadow: 0 0 40px rgba(0, 0, 0, .2);
+    border-radius: var(--border-radius);
+    background: var(--color-mypurple);
+}
+.container,
+.form__input,
+.form__button {
+    font-family: 'Lato', sans-serif;
+}
+
+.form > *:first-child {
+    margin-top: 0;
+}
+
+.form > *:last-child {
+    margin-bottom: 0;
+}
+
+.form__title {
+    font-family: “Comic Sans MS”, “Comic Sans”, cursive;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.form__message {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.form__message--success {
+    color: var(--color-success);
+}
+
+.form__message--error {
+    color: var(--color-error);
+}
+
+.form__input-group {
+    margin-bottom: 1rem;
+}
+
+.form__input {
+    width: 100%;
+    outline: none;
+    display: block;
+    font-size: 18px;
+    padding: 0.75rem;
+    background: #eeeeee;
+    box-sizing: border-box;
+    border-radius: var(--border-radius);
+    border: 1px solid #dddddd;
+    transition: background 0.2s, border-color #ff9595;
+}
+
+.form__input:focus {
+    border-color: var(--color-primary);
+    background: #ffffff;
+}
+
+.form__input--error {
+    color: var(--color-error);
+    border-color: var(--color-error);
+}
+
+.form__input-erro-message {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-error);
+}
+
+.form__button,.form__button_del {
+    width: 100%;
+    padding: 1.3rem 2rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #000000;
+    border: none;
+    border-radius: var(--border-radius);
+    outline: none;
+    cursor: pointer;
+    background: var(--color-primary);
+}
+.form__button_del {
+    background: #df6868;
+}
+.form__button_del:hover {
+    background: #ff4b4b;
+    padding: 2rem 3.5rem; 
+    transition-duration: 0.2s;
+}
+.form__button:hover {
+    padding: 1.5rem 2.5rem; 
+    transition-duration: 0.2s;
+    background: var(--color-primary-dark);
+}
+
+.form__button:active {
+    transform: scale(0.98);
+}
+
+.form__text {
+    text-align: center;
+}
+
+.form__link {
+    color: var(--color-secondary);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form__link:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,101 @@
+.topnav {
+    overflow: hidden;
+    background-color: #adaa9a;
+}
+
+.topnav a {
+    float: left;
+    border: black;
+    border-width: 1cm;
+    margin: 1px;
+    font-size: 18px;
+    text-decoration: none;
+    color: #000000;
+    text-align: center;
+    padding: 24px 24px;
+    border-radius: 10px;
+    background-color: #aed9ff;
+}
+
+.topnav a:hover {
+    color: black;
+    padding: 28px 30px;
+    border-radius: 36px;
+    background-color: #afffdf;
+    transition-duration: 0.25s;
+}
+
+.topnav a.active {
+    color: rgb(255, 255, 255);
+    background-color: #d362ff;
+}
+
+.topnav needsLogout {
+    float: right;
+    font-size: 14px;
+    color: #000000;
+    padding: 24px 36px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #ff5c6f;
+}
+
+.topnav needsLogout:hover {
+    color: black;
+    cursor: pointer;
+    padding: 28px 44px;
+    border-radius: 60px;
+    transition-duration: 0.25s;
+    background-color: #e90000;
+    
+}
+
+.topnav needsLogin {
+    float: right;
+    font-size: 14px;
+    text-align: center;
+    padding: 24px 48px;
+    border-radius: 5px;
+    background-color: #00d6af;
+}
+
+.topnav needsLogin:hover {
+    color: black;
+    cursor: pointer;
+    content: 'LOLL';
+    padding: 30px 52.5px;
+    border-radius: 60px;
+    transition-duration: 0.25s;
+    background-color: #4eca28;
+}
+
+.topnav needsLogin.active {
+    color: white;
+    cursor: not-allowed;
+    background-color: #02945e;
+}
+
+.topnav pwdChange {
+    float: right;
+    font-size: 17px;
+    text-align: center;
+    padding: 14px 36px;
+    border-radius: 5px;
+    background-color: #00d6af;
+}
+
+.topnav pwdChange:hover {
+    color: black;
+    cursor: pointer;
+    content: "LOL";
+    padding: 20px 36px;
+    border-radius: 60px;
+    transition-duration: 0.25s;
+    background-color: #adff94;
+}
+
+.topnav pwdChange.active {
+    color: white;
+    cursor: not-allowed;
+    background-color: #d362ff;
+}
