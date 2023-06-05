@@ -24,7 +24,7 @@ export class AccPageComponent {
   ){
     let loadAccount = new Account();
     if(loadAccount.isAccCookies()){
-      this.messageService.changeError("  {}  ");
+      this.messageService.changeError("");
       loadAccount.getAccountCookies(); 
       this.CAService.setAccount(loadAccount);
       this.titler();
@@ -57,7 +57,7 @@ export class AccPageComponent {
       this.messageService.changeError("The Passwords dont match!");
     }else if(passWord.length > 32){
       this.messageService.changeError("Password Lenght Can't Exceed 32 Chars!");
-    }else if(passWord==this.AService.hashPass(passWord)){
+    }else if( this.AService.hashPass(passWord) == this.CAService.getPassword()){
       this.messageService.changeError("New Password Same As Old Password");
     }else{
       const updatedUser = new Account({
@@ -69,13 +69,13 @@ export class AccPageComponent {
       try{
         var acctResponse = await this.AService.updateAccount(updatedUser).toPromise();
         if(acctResponse == null){
-          this.messageService.changeError("Error occurred while adding account.");
+          this.messageService.changeError("Error occurred while updating password.");
         }else if(acctResponse.id == 2){
           this.messageService.changeError("No DB Connection! Please try again later");
         }else{
-
+          this.messageService.changeError("");
+          this.CAService.setAccount(updatedUser);
           alert("Password successfully changed to : '" + passWord + "'");
-          this.messageService.clear();
         }
       }catch(error){
         console.log(error);

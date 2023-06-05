@@ -24,7 +24,7 @@ export class DashboardComponent {
         this.directButton('accountpage',3);
       }else{
         this.directButton("null",0);
-        this.titleService.setTitle("Dashboard");
+        this.CAService.setTitle("Dashboard");
       }
     }
 

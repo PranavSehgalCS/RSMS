@@ -1,1 +1,14 @@
-<p>view-category works!</p>
+
+<body>
+    
+    <h1 class="container_head">{{categoryArray.length}} Categories Exist</h1>
+    <div class = "info_line" *ngFor="let cats of categoryArray" >
+        <div class = "id">{{cats.caid}}</div>
+        <div class = "name" >{{cats.caname}}</div>
+        <div class = "desc">{{cats.cadesc.substring(0,36)}}...</div>
+        <div class ="">
+            <a [ngClass]="{'edit':true}" routerLink="/categories/edit">Edit</a>
+            <a [ngClass]="{'delete':true}" (click)="deleteCat(cats.caid,cats.caname)"  routerLink="/catagories/delete">Delete</a>
+        </div>
+    </div>
+</body>

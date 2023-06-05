@@ -4,21 +4,23 @@
     border-radius: 24px;
 }
 
-.topnav a {
+.topnav a, select {
     float: left;
-    border: black;
-    border-width: 1cm;
     margin: 2px;
+    border: none;
     font-size: 22px;
-    text-decoration: none;
     color: #000000;
+    text-decoration: none;
     text-align: center;
     padding: 24px 24px;
     border-radius: 10px;
+    max-width: 175px;
+    display: block;
     background-color: #aed9ff;
+    font-family: “Comic Sans MS”, “Comic Sans”;
 }
 
-.topnav a:hover {
+.topnav a:hover, select:hover{
     color: black;
     padding: 28px 30px;
     border-radius: 36px;
@@ -26,7 +28,7 @@
     transition-duration: 0.25s;
 }
 
-.topnav a.active {
+.topnav a.active ,select.active{
     color: rgb(255, 255, 255);
     background-color: #d362ff;
 }

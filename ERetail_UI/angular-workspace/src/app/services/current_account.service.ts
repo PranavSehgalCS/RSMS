@@ -1,5 +1,7 @@
 import { Account } from '../model/account';
 import { Injectable } from '@angular/core';
+import {Title} from "@angular/platform-browser";
+
 import { removeCookie, setCookie } from 'typescript-cookie';
 
 @Injectable({
@@ -9,7 +11,8 @@ import { removeCookie, setCookie } from 'typescript-cookie';
 export class CurrentAccountService {
   private currAccount: Account;
 
-  constructor() { 
+  
+  constructor(private title: Title) { 
     const newuser = <Account>(
       {
       id:0,
@@ -54,13 +57,12 @@ export class CurrentAccountService {
 
   setAccount(acc: Account){
     this.currAccount = acc;
-    var exp = 10;
-    if(this.currAccount.admin == true){exp = 1;}
-    setCookie('id', String(acc.id), {expires:exp});
-    setCookie('username', acc.username, {expires:exp});
-    setCookie('password', acc.password, {expires:exp});
-    setCookie('admin', acc.admin, {expires:exp});
-    setCookie('isAccCookies', 'true', {expires:exp});
+    var properties = {expires: 0.2, path:'/'};
+    setCookie('id', String(acc.id), properties);
+    setCookie('username', acc.username, properties);
+    setCookie('password', acc.password, properties);
+    setCookie('admin', acc.admin, properties);
+    setCookie('isAccCookies', 'true', properties);
   }
 
 
@@ -74,6 +76,10 @@ export class CurrentAccountService {
     this.setAccount(newPass);
   }
 
+  setTitle(title:string){
+    this.title.setTitle(title);
+  }
+
   logout() {
     const newuser = <Account>({
       id:0,
@@ -81,11 +87,12 @@ export class CurrentAccountService {
       password: " ",
       admin: false,
       })
+    removeCookie('id');
     removeCookie('admin');
     removeCookie('username');
     removeCookie('password');
-    setCookie('id', '0');
-    setCookie('isAccCookies', 'false');
+    removeCookie('isAccCookies');
+    setCookie('nav_id',6);
     this.currAccount = newuser;
   }
 
