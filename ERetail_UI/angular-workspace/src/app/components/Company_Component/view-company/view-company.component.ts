@@ -33,6 +33,10 @@ export class ViewCompanyComponent {
         this.companyArray = res;
       });
   }
+  editLocation(coidparam:number){
+    this.router.navigate(['/companies/edit'],{queryParams:{coid:coidparam}});
+  }
+
   deleteCompany(coid:number, coname:string){
     if(confirm("Are you sure you want to delete the product :\n\n" +coid+' : '+coname)){
       if(this.comService.deleteCompany(coid,coname)){

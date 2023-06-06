@@ -1,10 +1,83 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-
+import { Account } from 'src/app/model/account';
+import { ActivatedRoute } from '@angular/router';
+import { CompanyService } from 'src/app/services/company.service';
+import { MessageService } from 'src/app/services/message.service';
+import { CurrentAccountService } from 'src/app/services/current_account.service';
 @Component({
   selector: 'app-edit-company',
   templateUrl: './edit-company.component.html',
-  styleUrls: ['./edit-company.component.css']
+  styleUrls: ['../../Category_Components/create-category/create-category.component.css']
 })
-export class EditCompanyComponent {
 
+export class EditCompanyComponent {
+  constructor(
+    private router:Router,
+    private route:ActivatedRoute,
+    private ComService:CompanyService,
+    public messageService: MessageService,
+    private CAService:CurrentAccountService
+    ){
+    let loadAccount = new Account();
+    if(loadAccount.isAccCookies()){
+      loadAccount.getAccountCookies();
+      this.CAService.setAccount(loadAccount);
+      this.messageService.changeError("{}")
+      this.CAService.setTitle("Edit Companies");
+    }else{
+      this.router.navigate(['/login']);
+    }
+  }
+  private error:boolean = true;
+  public curCoid:number = -1;
+  public curConame:string ="";
+  public curCodesc:string ="";
+  public Heading:string = "Getting Company Data From Backend ...";
+
+  ngOnInit() {
+    this.curCoid = Number(this.route.snapshot.queryParamMap.get('coid'));
+    this.ComService.getCompanies(this.curCoid).subscribe(res => {
+      var CurVal = res.pop();
+      if(CurVal!=null){
+        this.error = false;
+        this.curCoid = CurVal.coid;
+        this.curConame = CurVal.coname;
+        this.curCodesc = CurVal.codesc;
+        this.Heading = ("Editing Company of ID : "+String(this.curCoid));
+      }else{
+        this.error = true;
+        this.Heading = ("ERROR!!!");
+        this.messageService.changeError(("No Company With ID : "+String(this.curCoid) + ' Found')); 
+      }
+    });
+  }
+
+
+  async editCompany(coname:string, codesc:string){
+    coname =  coname.trim().replaceAll("'","");
+    codesc = codesc.trim().replaceAll("'","");
+    try{
+      if(this.error){
+        this.messageService.changeError("Unable To Edit Company");
+      }else if(coname.length==0){
+        this.messageService.changeError("Please Enter A Company Name");
+      }else if(coname.length>46){
+        this.messageService.changeError("Company Name Can't Exceed 46 Chars");
+      }else if(codesc.length==0){
+        this.messageService.changeError("Please Enter A Company Description");
+      }else if(codesc.length>256){
+        this.messageService.changeError("Company Name Can't Exceed 256 Chars");
+      }else{
+        this.ComService.updateCompany(this.curCoid, coname,codesc).subscribe( res =>{
+          var respVal = res;
+          if( (respVal.coname == coname) && (respVal.codesc == codesc) ){
+            alert("Company Updated Successfuly!");
+          }
+        });
+      }
+    }catch{
+
+    }
+  }
 }

@@ -1,11 +1,11 @@
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-
 import { Account } from 'src/app/model/account';
+import { Component, OnInit } from '@angular/core';
+import { Categories } from 'src/app/model/categories';
 import { CategoryService } from 'src/app/services/category.service';
 import { CurrentAccountService } from 'src/app/services/current_account.service';
-import { Categories } from 'src/app/model/categories';
-import { Observable } from 'rxjs';
+
 
 
 @Component({
@@ -36,7 +36,9 @@ export class ViewCategoryComponent implements OnInit {
         this.categoryArray = res;
       });
   }
-  
+  editLocation(caidparam:number){
+    this.router.navigate(['/categories/edit'],{queryParams:{caid:caidparam}});
+  } 
   deleteCat(caid:number, caname:string){
     if(confirm("Are you sure you want to delete the product :\n\n" +caid+' : '+caname)){
       if(this.CatService.deleteCategory(caid,caname)){

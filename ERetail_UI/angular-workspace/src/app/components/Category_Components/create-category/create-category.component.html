@@ -1,1 +1,23 @@
-<p>create-category works!</p>
+<body>
+    <div class="container">
+        <form class="form" id="login">
+            <h1 class="form_title">Create A New Category</h1>
+            <div id = "error_Message" class="form__message form__message--error">{{messageService.errorMsg}}</div>
+
+            <div class="form__input-group">
+                <input #coname type="Category_Name" class="form__input" autofocus placeholder="Enter Category Name">
+                <div class="form__input-error-message"></div>
+            </div>
+
+            <div class="form__input-group">
+                <input #codesc type="Category_Desc" class="form__input" autofocus placeholder="Enter Category Descreption">
+                <div class="form__input-error-message"></div>
+            </div>
+
+            <button class="form__button" type="button" (click)="createCategory(coname.value, codesc.value)">Click To Create</button>
+            <div>
+                <button class="form__button" type="button" routerLink="/categories/view">View All Companies --></button>
+            </div>
+        </form>
+    </div>
+</body>

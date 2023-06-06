@@ -6,9 +6,9 @@
         <div class = "id">{{coms.coid}}</div>
         <div class = "name" >{{coms.coname}}</div>
         <div class = "desc">{{coms.codesc.substring(0,33)}}...</div>
-        <div class ="">
-            <a [ngClass]="{'edit':true}" routerLink="/companies/edit">Edit</a>
-            <a [ngClass]="{'delete':true}"(click)="deleteCompany(coms.coid,coms.coname)" routerLink="/companies/delete">Delete</a>
+        <div class ="toright">
+            <a [ngClass]="{'edit':true}" (click)="editLocation(coms.coid)" >Edit</a>
+            <a [ngClass]="{'delete':true}"(click)="deleteCompany(coms.coid,coms.coname)">Delete</a>
         </div>
     </div>
 </body>

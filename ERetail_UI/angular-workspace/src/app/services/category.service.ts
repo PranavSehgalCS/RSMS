@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Companies } from '../model/companies';
 
 @Injectable({
   providedIn: 'root'
@@ -28,18 +29,31 @@ export class CategoryService {
   }
 
   getCategories(caid:number): Observable<Categories[]>{
-    if(caid==-1){
-      return this.http.get<Categories[]>(this.catUrl)
-      .pipe(
-        tap(_ => this.log('fetched all categories')),
-        catchError(this.handleError<Categories[]>('getCategories', []))
-      );
-    }
-    return this.http.get<Categories[]>((this.catUrl+'/'+String(caid)))
-      .pipe(
+    var finalURL = this.catUrl;
+    if(caid!=-1){ finalURL = (this.catUrl+'/'+String(caid));}
+    return this.http.get<Categories[]>(finalURL).pipe(
         tap(_ => this.log('fetched category of caid:' + String(caid))),
         catchError(this.handleError<Categories[]>('getCategories', []))
       );
+  }
+
+  createCategory(caname:string, cadesc:string): Observable<Categories>{
+    const PPars = new HttpParams().append("caname",caname)
+                                  .append("cadesc",cadesc);
+    return this.http.post<Categories>(this.catUrl,null,{params:PPars}).pipe(
+        tap(_ => this.log('Created company of coname:' + String(caname))),
+        catchError(this.handleError<Categories>('getCompanies'))
+      );
+  }
+
+  updateCategory(caid:number,caname:string, cadesc:string ):Observable<Categories>{
+    const PPars = new HttpParams().append("caid" , caid)
+                                  .append("caname",caname)
+                                  .append("cadesc",cadesc);
+    return this.http.put<Categories>(this.catUrl ,null,{params:PPars}).pipe(
+      tap(_ => this.log('Updated category of coname:' + caname)),
+      catchError(this.handleError<Categories>('getCompanies'))
+    ); 
   }
 
   deleteCategory(caid:number, caname:string): boolean{

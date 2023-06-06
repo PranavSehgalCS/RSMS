@@ -4,6 +4,7 @@ import { Companies } from '../model/companies';
 import { catchError, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { r3JitTypeSourceSpan } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -28,18 +29,31 @@ export class CompanyService {
   }
 
   getCompanies(coid:number): Observable<Companies[]>{
-    if(coid==-1){
-      return this.http.get<Companies[]>(this.comUrl)
-      .pipe(
-        tap(_ => this.log('fetched all categories')),
-        catchError(this.handleError<Companies[]>('getCategories', []))
-      );
-    }
-    return this.http.get<Companies[]>((this.comUrl+'/'+String(coid)))
-      .pipe(
+    var finalUrl = this.comUrl; 
+    if(coid!=-1){ finalUrl = this.comUrl+'/'+String(coid); }
+    return this.http.get<Companies[]>(finalUrl).pipe(
         tap(_ => this.log('fetched category of caid:' + String(coid))),
         catchError(this.handleError<Companies[]>('getCompanies', []))
       );
+  }
+
+  createCompany(coname:string, codesc:string): Observable<Companies>{
+    const PPars = new HttpParams().append("coname",coname)
+                                  .append("codesc",codesc);
+    return this.http.post<Companies>(this.comUrl,null,{params:PPars}).pipe(
+        tap(_ => this.log('Created company of coname:' + String(coname))),
+        catchError(this.handleError<Companies>('getCompanies'))
+      );
+  }
+
+  updateCompany(coid:number,coname:string, codesc:string ):Observable<Companies>{
+    const PPars = new HttpParams().append("coid" , coid)
+                                  .append("coname",coname)
+                                  .append("codesc",codesc);
+    return this.http.put<Companies>(this.comUrl ,null,{params:PPars}).pipe(
+      tap(_ => this.log('Updated category of coname:' + coname)),
+      catchError(this.handleError<Companies>('getCompanies'))
+    ); 
   }
 
   deleteCompany(coid:number, coname:string): boolean{
