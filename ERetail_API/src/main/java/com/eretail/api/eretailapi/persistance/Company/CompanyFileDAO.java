@@ -59,7 +59,7 @@ public class CompanyFileDAO implements CompanyDAO{
             int i = statement.executeUpdate(command);
             statement.close();
             if(i<1){return false;}
-            this.updated=false;
+            this.updated = false;
             return true;
         } catch (Exception e) {
             return false;
@@ -94,7 +94,6 @@ public class CompanyFileDAO implements CompanyDAO{
     public Boolean deleteCompany(int coid, String coname) throws IOException {
         String cmd = "DELETE FROM companies WHERE coid = " + coid + " AND coname = '"+coname+"';";
         if(saveCompanies(cmd)){
-            updated =false;
             this.avalibleID.add(coid);
             return true;
         }
@@ -113,7 +112,6 @@ public class CompanyFileDAO implements CompanyDAO{
         }
         String cmd = "INSERT INTO companies VALUES("+coid + ", '"+coname+"', '"+codesc+"');";
         if(saveCompanies(cmd)){
-            updated =false;
             return new Company(coid, coname, codesc);
         }else{
             return null;
@@ -134,11 +132,9 @@ public class CompanyFileDAO implements CompanyDAO{
         }
         if(retVal!=null){
             if(!retVal.getConame().equals(newName)){
-                updated =false;
                 b1 = saveCompanies("UPDATE companies SET coname = '" + newName +"' WHERE coid = " + coid +";");
             }
             if(!retVal.getCodesc().equals(newDesc)){
-                updated =false;
                 b2 = saveCompanies("UPDATE companies SET codesc = '" + newDesc +"' WHERE coid = " + coid +";");
             }
             if(b1 && b2){
