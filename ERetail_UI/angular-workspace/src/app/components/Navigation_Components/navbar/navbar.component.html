@@ -6,7 +6,7 @@
 
     <div *ngIf="isLoggedIn() && isAdmin()">
         <a [ngClass]="{'active': id === 0}" id="0" routerLink="/dashboard" (click)="addClass(id=0)">Dashboard</a>
-        <a [ngClass]="{'active': id === 1}" id="1" routerLink="/create product" (click)="addClass(id=1)">Product :</a>
+        <a [ngClass]="{'active': id === 1}" id="1" routerLink="/products/view" (click)="addClass(id=1)">Product :</a>
         <a [ngClass]="{'active': id === 2}" id="2" routerLink="/companies/view" (click)="addClass(id=2)">Company :</a>
         <a [ngClass]="{'active': id === 3}" id="3" routerLink="/categories/view" (click)="addClass(id=3)">Category :</a>
     </div>

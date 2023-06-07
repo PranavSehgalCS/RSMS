@@ -17,7 +17,9 @@ import { ViewCategoryComponent } from './components/Category_Components/view-cat
 import { CreateCategoryComponent } from './components/Category_Components/create-category/create-category.component';
 import { EditCategoryComponent } from './components/Category_Components/edit-category/edit-category.component';
 
-
+import { ViewProductComponent } from './components/Product_Components/view-product/view-product.component';
+import { CreateProductComponent } from './components/Product_Components/create-product/create-product.component';
+import { EditProductComponent } from './components/Product_Components/edit-product/edit-product.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -36,7 +38,12 @@ const routes: Routes = [
   { path: 'categories', redirectTo: '/companies/view', pathMatch: 'full' }, 
   { path: 'categories/view', component: ViewCategoryComponent, pathMatch: 'prefix'},
   { path: 'categories/edit', component: EditCategoryComponent, pathMatch: 'prefix'},
-  { path: 'categories/create', component: CreateCategoryComponent, pathMatch: 'prefix'}
+  { path: 'categories/create', component: CreateCategoryComponent, pathMatch: 'prefix'},
+
+  { path: 'products', redirectTo: '/companies/view', pathMatch: 'full' }, 
+  { path: 'products/view', component: ViewProductComponent, pathMatch: 'prefix'},
+  { path: 'products/edit', component: EditProductComponent, pathMatch: 'prefix'},
+  { path: 'products/create', component: CreateProductComponent, pathMatch: 'prefix'},
 ];
 
 @NgModule({

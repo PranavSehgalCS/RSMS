@@ -21,6 +21,7 @@ import { CreateCategoryComponent } from './components/Category_Components/create
 import { ViewCompanyComponent } from './components/Company_Component/view-company/view-company.component';
 import { EditCompanyComponent } from './components/Company_Component/edit-company/edit-company.component';
 import { CreateCompanyComponent } from './components/Company_Component/create-company/create-company.component';
+import { ViewProductComponent } from './components/Product_Components/view-product/view-product.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { CreateCompanyComponent } from './components/Company_Component/create-co
     CreateCategoryComponent,
     EditCategoryComponent,
     EditCompanyComponent,
-    CreateCompanyComponent
+    CreateCompanyComponent,
+    ViewProductComponent
     ],
   imports: [
     FormsModule,
