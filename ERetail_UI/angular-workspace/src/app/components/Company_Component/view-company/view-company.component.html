@@ -1,7 +1,7 @@
 
 <body>
     
-    <h1 class="container_head">{{companyArray.length}} Companies Exist</h1>
+    <h1 class="container_head">{{companyArray.length}} Companies Exist <a routerLink="/companies/create" class = "plus">+</a></h1>
     <div class = "info_line" *ngFor="let coms of companyArray" >
         <div class = "id">{{coms.coid}}</div>
         <div class = "name" >{{coms.coname}}</div>

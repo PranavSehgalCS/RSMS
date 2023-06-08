@@ -3,13 +3,23 @@ body{
     text-align: center;
     align-content: center;
 }
-.container_head{
+.container_head,.plus{
     font-size: 42px;
     color: aliceblue;
     font-family: “Comic Sans MS”, “Comic Sans”, cursive;
 }
 
-
+.plus{
+    margin-left: 20px;
+    border-radius: 50px;
+    padding: 0.3rem 2rem;
+    text-decoration: none;
+    background-color: hsl(33, 100%, 59%);
+}
+.plus:hover{
+    font-size: 50px;
+    transition-duration: 0.25s;
+}
    
 .info_line{
     display: flex;

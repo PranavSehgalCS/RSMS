@@ -1,6 +1,6 @@
 <body>
     
-    <h1 class="container_head">{{productArray.length}} Products  Exist</h1>
+    <h1 class="container_head">{{productArray.length}} Products Exist <a routerLink="/products/create" class = "plus">+</a></h1>
     <a class = "info_line" (click)="viewLocation(pros.pcode)" *ngFor="let pros of productArray" >
         <div class = "pcode">{{pros.pcode}}</div>
         <div class = "name" >{{pros.pname}}</div>
