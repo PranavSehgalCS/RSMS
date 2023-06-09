@@ -32,7 +32,7 @@ export class CreateProductComponent {
     if(loadAccount.isAccCookies()){
       loadAccount.getAccountCookies();
       this.CAService.setAccount(loadAccount);
-      this.CAService.setTitle("View Products");
+      this.CAService.setTitle("Create Products");
       this.messageService.changeError("{}");
     }else{
       this.router.navigate(['/login']);

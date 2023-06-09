@@ -1,5 +1,4 @@
-<body>
-    
+<body> 
     <h1 class="container_head">{{headNum}} Products Exist <a routerLink="/products/create" class = "plus">+</a></h1>
     <a id="{{pros.pcode}}" class = "info_line" (click)="viewLocation(pros.pcode)" *ngFor="let pros of productArray" >
         <div class = "pcode">{{pros.pcode}}</div>

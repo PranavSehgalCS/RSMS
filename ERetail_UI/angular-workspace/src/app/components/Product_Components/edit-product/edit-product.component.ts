@@ -75,7 +75,6 @@ export class EditProductComponent {
       this.Heading="ERROR!! \nInvalid Retrive Link..."
     }
     if(this.curPcode!=undefined && this.curPcode!='null'){
-      this.CAService.setTitle(this.curPcode);
       this.proService.getProducts(this.curPcode).subscribe(res => {
         var curVal=res.pop();
         if(curVal!=null && curVal!=undefined){

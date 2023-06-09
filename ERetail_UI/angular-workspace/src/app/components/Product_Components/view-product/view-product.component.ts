@@ -21,7 +21,7 @@ export class ViewProductComponent {
     if(loadAccount.isAccCookies()){
       loadAccount.getAccountCookies();
       this.CAService.setAccount(loadAccount);
-      this.CAService.setTitle("View Companies");
+      this.CAService.setTitle("View Products");
     }else{
       this.router.navigate(['/login']);
     }

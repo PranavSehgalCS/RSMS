@@ -27,6 +27,23 @@ export class ViewCompanyComponent {
   }
 
   public companyArray: Companies[] = [];
+  public deletedCoid:number = -1;
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+  async viewLocation(coidParam:number){
+    await this.delay(5);
+    if(this.deletedCoid!=coidParam){
+      this.comService.getCompanies(coidParam).subscribe(res => {
+        if(res.pop()!=undefined){
+          this.router.navigate(['/companies/viewcompany'],{queryParams:{coid:coidParam}});
+        }
+      });
+    }else{
+      this.deletedCoid=-1;
+    }
+  }
 
   ngOnInit() {
       this.comService.getCompanies(-1).subscribe(res => {
@@ -38,6 +55,7 @@ export class ViewCompanyComponent {
   }
 
   deleteCompany(coid:number, coname:string){
+    this.deletedCoid = coid;
     if(confirm("Are you sure you want to delete the product :\n\n" +coid+' : '+coname)){
       if(this.comService.deleteCompany(coid,coname)){
         location.reload()

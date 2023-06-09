@@ -1,0 +1,17 @@
+<body>
+    <div class="container" style="height: 20rem;">
+        <div class = "infoid">
+            <div class = "nam">ID :</div>
+            <div class = "val">{{this.curCaid}}</div>
+        </div>
+        <div class = "infoid">
+            <div class = "nam">Name :</div>
+            <div class = "val">{{this.curCaname}}</div>
+        </div>
+        <div class = "infoid">
+            <div class = "nam">Description :</div>
+            <div class = "val">{{this.curCadesc}}</div>
+        </div>
+        <button style="margin-top: 60px;margin-bottom: 30px;" (click)="editLocation(this.curCaid)" class="form__button" type="button" >Click To Go To Edit</button>    
+    </div>
+</body>

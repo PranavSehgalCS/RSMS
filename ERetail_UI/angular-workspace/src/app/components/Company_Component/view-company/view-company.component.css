@@ -36,7 +36,8 @@ body{
 .info_line:hover{
     font-size: 25px;
     max-width: 85%;
-    margin-left:9rem; 
+    cursor: pointer; 
+    margin-left:9rem;
     transition-duration: 0.25s;
     box-shadow: 0 0 40px rgb(0, 0, 0.2);
 }

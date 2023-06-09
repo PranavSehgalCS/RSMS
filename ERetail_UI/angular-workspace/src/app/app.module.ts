@@ -20,6 +20,8 @@ import { CreateCompanyComponent } from './components/Company_Component/create-co
 import { ViewProductComponent } from './components/Product_Components/view-product/view-product.component';
 import { EditProductComponent } from './components/Product_Components/edit-product/edit-product.component';
 import { CreateProductComponent } from './components/Product_Components/create-product/create-product.component';
+import { ViewcompanyComponent } from './components/Company_Component/viewcompany/viewcompany.component';
+import { ViewcategoryComponent } from './components/Category_Components/viewcategory/viewcategory.component';
 
 
 @NgModule({
@@ -35,7 +37,9 @@ import { CreateProductComponent } from './components/Product_Components/create-p
     EditCompanyComponent,
     ViewProductComponent,
     EditProductComponent,
-    CreateProductComponent
+    CreateProductComponent,
+    ViewcompanyComponent,
+    ViewcategoryComponent
     ],
   imports: [
     FormsModule,

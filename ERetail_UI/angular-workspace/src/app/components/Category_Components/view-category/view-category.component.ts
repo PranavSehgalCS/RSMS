@@ -16,7 +16,7 @@ import { CurrentAccountService } from 'src/app/services/current_account.service'
 export class ViewCategoryComponent implements OnInit {
   constructor(
     private router:Router,
-    private CatService:CategoryService,
+    private catService:CategoryService,
     private CAService:CurrentAccountService
     ){
     let loadAccount = new Account();
@@ -29,10 +29,27 @@ export class ViewCategoryComponent implements OnInit {
     }
   }
 
+  public deletedCaid:number = -1;
   public categoryArray: Categories[] = [];
 
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+  
+  async viewLocation(caidParam:number){
+    await this.delay(5);
+    if(this.deletedCaid!=caidParam){
+      this.catService.getCategories(caidParam).subscribe(res => {
+        if(res.pop()!=undefined){
+          this.router.navigate(['/categories/viewcategory'],{queryParams:{caid:caidParam}});
+        }
+      });
+    }else{
+      this.deletedCaid=-1;
+    }
+  }
   ngOnInit() {
-      this.CatService.getCategories(-1).subscribe(res => {
+      this.catService.getCategories(-1).subscribe(res => {
         this.categoryArray = res;
       });
   }
@@ -40,8 +57,9 @@ export class ViewCategoryComponent implements OnInit {
     this.router.navigate(['/categories/edit'],{queryParams:{caid:caidparam}});
   } 
   deleteCat(caid:number, caname:string){
+    this.deletedCaid = caid;
     if(confirm("Are you sure you want to delete the product :\n\n" +caid+' : '+caname)){
-      if(this.CatService.deleteCategory(caid,caname)){
+      if(this.catService.deleteCategory(caid,caname)){
         location.reload()
       }else{
         alert("ERROR!!!\n Could Not Delete Category");
