@@ -21,7 +21,7 @@ body{
     font-size: 50px;
     transition-duration: 0.25s;
 }
-   
+  
 .info_line{
     display: flex;
     font-size: 24px;
@@ -35,6 +35,7 @@ body{
     box-shadow: rgb(0, 0, 0.2);
 }
 .info_line:hover{
+    cursor: pointer;
     font-size: 26px;
     max-width: 77%;
     margin-left:9rem; 

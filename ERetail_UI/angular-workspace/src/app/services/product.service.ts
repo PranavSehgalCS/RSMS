@@ -30,8 +30,45 @@ export class ProductService {
         catchError(this.handleError<Products[]>([]))
       );
   }
+  
+  getProductDates(pcode:string): Observable<string[]>{
+    var finalUrl = this.proUrl+'/getdate/'+String(pcode);
+    var retVal:Observable<string[]> = this.http.get<string[]>(finalUrl).pipe(
+        catchError(this.handleError<string[]>([]))
+      );
+    return retVal;
+  }
 
-  deleteCompany(pcode:string, pname:string): boolean{
+  createProduct(pname:string, category:string, company:string, stock:number, 
+    price:number, mnfdate:string, expdate:string, description:string): boolean{
+    const param = new HttpParams().append("pname", pname )
+                                  .append("category", category)
+                                  .append("company", company)
+                                  .append("stock", String(stock))
+                                  .append("price", String(price))
+                                  .append("mnfdate", mnfdate)
+                                  .append("expdate", expdate)
+                                  .append("description", description)                       
+    var retVal = this.http.post(this.proUrl,null,{params:param}).subscribe();
+    return Boolean(retVal)
+  }
+
+
+  updateProduct(pcode:string, pname:string, category:string, company:string, stock:number, 
+    price:number, mnfdate:string, expdate:string, description:string): boolean{
+    const param = new HttpParams().append("pcode", pcode )
+                                  .append("pname", pname )
+                                  .append("category", category)
+                                  .append("company", company)
+                                  .append("stock", String(stock))
+                                  .append("price", String(price))
+                                  .append("mnfdate", mnfdate)
+                                  .append("expdate", expdate)
+                                  .append("description", description)                       
+    var retVal = this.http.put(this.proUrl,null,{params:param}).subscribe();
+    return Boolean(retVal)
+  }
+  deleteProduct(pcode:string, pname:string): boolean{
     const param = new HttpParams().append("pcode", pcode)
                                   .append("pname", pname);
     var retVal = this.http.delete(this.proUrl,{params:param}).subscribe();

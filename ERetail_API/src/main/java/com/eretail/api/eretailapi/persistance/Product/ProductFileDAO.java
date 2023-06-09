@@ -102,7 +102,7 @@ public class ProductFileDAO implements ProductDAO{
             pcode = formatPcode(ProductFileDAO.nextID - 1); 
         }
         String cmd = "INSERT INTO products VALUES(" + quote(pcode) + quote(pname) + quote(category) + quote(company) + Integer.toString(stock)
-                    + ", " + Integer.toString(stock) + ", " + quote(manufactureDate.toString()) + quote(expiryDate.toString()) + " '" +description + "');";
+                    + ", " + Double.toString(price) + ", " + quote(manufactureDate.toString()) + quote(expiryDate.toString()) + " '" +description + "');";
         if(saveProducts(cmd)){
             return true;
         }
@@ -194,6 +194,18 @@ public class ProductFileDAO implements ProductDAO{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String formatDate(String date) throws IOException {
+        try{
+            String[] spliten = date.split("-");
+            String retVal = spliten[2] + "-" + spliten[1] + "-" + spliten[0];
+            return retVal;
+        }catch (Exception e) {
+            System.out.println("Error while reformatting date --> " + e);
+            return "00-00-00";
+        }
     }
     
 }

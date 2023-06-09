@@ -20,6 +20,7 @@ import { EditCategoryComponent } from './components/Category_Components/edit-cat
 import { ViewProductComponent } from './components/Product_Components/view-product/view-product.component';
 import { CreateProductComponent } from './components/Product_Components/create-product/create-product.component';
 import { EditProductComponent } from './components/Product_Components/edit-product/edit-product.component';
+import { ViewproductComponent } from './components/Product_Components/viewproduct/viewproduct.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -44,6 +45,7 @@ const routes: Routes = [
   { path: 'products/view', component: ViewProductComponent, pathMatch: 'prefix'},
   { path: 'products/edit', component: EditProductComponent, pathMatch: 'prefix'},
   { path: 'products/create', component: CreateProductComponent, pathMatch: 'prefix'},
+  { path: 'products/viewproduct', component: ViewproductComponent, pathMatch: 'prefix'}
 ];
 
 @NgModule({

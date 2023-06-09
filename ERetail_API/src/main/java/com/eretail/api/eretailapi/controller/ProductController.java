@@ -45,7 +45,7 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    
     @GetMapping("/{pcode}")
     public ResponseEntity<Product[]>getProductPath(@PathVariable String pcode){
         LOG.info("GET /products/" + pcode);
@@ -63,6 +63,27 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/getdate/{pcode}")
+    public ResponseEntity<String[]>getProductDate(@PathVariable String pcode){
+        LOG.info("GET /products/getdate" + pcode);
+        if(pcode.length()<1){return null;}
+        try {
+            Product[] gVal = this.productDao.getProducts(pcode);
+            if(gVal!=null && gVal.length>0){
+                String[] retVal = new String[2];
+                retVal[0] = gVal[0].getManufactureDate();
+                retVal[1] = gVal[0].getExpiryDate();
+                return new ResponseEntity<String[]>(retVal ,HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+
     @PostMapping("")
     public ResponseEntity<Boolean> createCompanies(     @RequestParam(name = "pname", required = true) String pname, 
                                                         @RequestParam(name = "category", required = true) String category,
@@ -76,8 +97,8 @@ public class ProductController {
         LOG.info("POST /companies/" + pname + ":" +description); 
         try{
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            Date manufactureDate = new java.sql.Date(sdf.parse(mnfDate).getTime());
-            Date expiryDate = new java.sql.Date(sdf.parse(expDate).getTime());
+            Date manufactureDate = new java.sql.Date(sdf.parse(productDao.formatDate(mnfDate)).getTime());
+            Date expiryDate = new java.sql.Date(sdf.parse(productDao.formatDate(expDate)).getTime());
             Boolean productNew = productDao.createProduct(pname,category,company,stock,price,manufactureDate,expiryDate,description);
             if(productNew != null){
                 return new ResponseEntity<Boolean>(productNew, HttpStatus.CREATED);
@@ -106,8 +127,8 @@ public class ProductController {
         LOG.info("PUT /products/" + pcode + ":" + pname);
         try{
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            Date manufactureDate = new java.sql.Date(sdf.parse(mnfDate).getTime());
-            Date expiryDate = new java.sql.Date(sdf.parse(expDate).getTime());
+            Date manufactureDate = new java.sql.Date(sdf.parse(productDao.formatDate(mnfDate)).getTime());
+            Date expiryDate = new java.sql.Date(sdf.parse(productDao.formatDate(expDate)).getTime());
             Boolean updated =  productDao.updateProduct(pcode, pname, category, company
             ,stock, price,  manufactureDate, expiryDate, description);
             if(updated==true){

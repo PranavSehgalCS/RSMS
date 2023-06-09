@@ -1,15 +1,15 @@
 <body>
     
-    <h1 class="container_head">{{productArray.length}} Products Exist <a routerLink="/products/create" class = "plus">+</a></h1>
-    <a class = "info_line" (click)="viewLocation(pros.pcode)" *ngFor="let pros of productArray" >
+    <h1 class="container_head">{{headNum}} Products Exist <a routerLink="/products/create" class = "plus">+</a></h1>
+    <a id="{{pros.pcode}}" class = "info_line" (click)="viewLocation(pros.pcode)" *ngFor="let pros of productArray" >
         <div class = "pcode">{{pros.pcode}}</div>
         <div class = "name" >{{pros.pname}}</div>
         <div class = "cnc">{{pros.category}}</div>
-        <div class = "price">Rs.{{pros.price}}</div>
+        <div class = "price">Rs {{pros.price}}</div>
         <div class = "cnc">{{pros.stock}} in stock</div>
         <div class ="toright">
             <a class="edit" (click)="editLocation(pros.pcode)" >Edit</a>
-            <a class="delete"(click)="deleteCompany(pros.pcode, pros.pname)">Delete</a>
+            <a class="delete" routerLink="/products/delete" (click)="deleteProduct(pros.pcode, pros.pname)">Delete</a>
         </div>
     </a>
 </body>

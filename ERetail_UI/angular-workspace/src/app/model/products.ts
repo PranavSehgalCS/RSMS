@@ -5,8 +5,8 @@ export class Products{
     public company:string = "";
     public stock:number = 0;
     public price:number = 0;
-    public mnfdate:Date = new Date(0);
-    public expdate:Date = new Date(0); 
+    public mnfdate:string = "";
+    public expdate:string = ""; 
     public description:string = "";
 
     public constructor(init?:Partial<Products>) {

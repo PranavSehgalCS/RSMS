@@ -1,1 +1,66 @@
-<p>edit-product works!</p>
+
+<body>
+
+    <div class="container" >
+        <form class="form" id="login">
+            <h1 class="form_title">{{Heading}}</h1>
+            <div id = "error_Message" class="form__message form__message--error">{{messageService.errorMsg}}</div>
+            
+            <div class="form__input-group" style="margin-bottom: 1rem;">
+                <input #pname  value="{{this.curPname}}" class="form__input" autofocus placeholder="Enter Product Name">
+            </div>
+
+            <div class = "drops" style="margin-bottom: 1rem;">
+                <select #category style="margin-right: 6%; margin-left: 7%;">
+                    <option value="{{this.curCat}}">{{this.curCat}}</option>
+                    <option *ngFor="let cats of categoryArray" class="opt" [value]="cats.caname">
+                        {{cats.caname}}
+                    </option>
+                </select>
+
+                <select #company>
+                    <option value="{{this.curCom}}">{{this.curCom}}</option>
+                    <option *ngFor="let coms of companyArray" [value]="coms.coname">
+                        {{coms.coname}}
+                    </option>
+                </select>
+            </div>
+                
+            <div class = "drops">
+                <div class="form__input-group" style="width: 40%; margin-right: 6%; margin-left: 7%;">
+                    <input #stock value="{{this.curStock}}" class="form__input" style="height:60px; text-align: center;"  autofocus placeholder="Enter Product Stock">
+                </div>
+                <div class="form__input-group" style="width: 40%;">
+                    <input #price value="{{this.curPrice}}" class="form__input" style="height:60px; text-align: center;" autofocus placeholder="Enter Product Price">
+                </div>
+            </div>
+              
+            
+            <div class="drops">
+                <div style= "width:40%; margin-top:none; margin-right: 6%; margin-left: 7%;" >
+                    <input id="mnfdate" #mnfdate type="date" value ="{{ dater1 | date: 'yyyy-MM-dd'}}" style="height:65px;text-align: center;" class="form__input">
+                    <script>
+                        document.getElementById("mnfdate").value="";
+                        document.getElementById("newdate").value = $rootScope.formEdit.date;
+                    </script>
+                    <div class="dateHead">Manufacture Date</div>
+                </div>
+
+                <div style= "width:40%;" >
+                   <input #expdate type="date" value ="{{ dater2 | date: 'yyyy-MM-dd'}}" style="height:65px;text-align: center;" class="form__input">
+                   <div class="dateHead">Expiry Date</div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <textarea #description [value]="this.curDesc" id="descText" style="height: 80px; max-height: 150px; max-width: 100%;" class="form__input"></textarea>
+            </div>
+
+            <div>
+                <button id="up" class="form__button" type="button" (click)="updateProduct(pname.value, category.value, company.value, toNum(stock.value), toNum(price.value), (mnfdate.value), (expdate.value), description.value)">Click To Update Product</button>
+                <button style="margin-bottom: 30px;" class="form__button" type="button" routerLink="/products/view">View All Products --></button>
+            </div>
+        </form>
+    </div>
+  
+</body>

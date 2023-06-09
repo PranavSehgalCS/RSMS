@@ -1,0 +1,111 @@
+body {
+    --color-primary: #01bb99;
+    --color-primary-dark: #09937a;
+    --color-secondary: #1e2562;
+    --color-error: hsl(0, 100%, 50%);
+    --color-success: #4bb544;
+    --color-mypurple: #da89f8;
+    --border-radius: 32px;
+
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    font-size: 26px;
+    background:  #ffb356;
+    background-size: cover;
+}
+
+.container {
+    width: 700px;
+    height: 50rem;
+    margin: 5rem;
+    padding: 3rem 5rem;
+    align-content: center;
+    background: var(--color-mypurple);
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 40px rgba(0, 0, 0, .2);
+}
+.form__message {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.form__message--error {
+    color: var(--color-error);
+}
+
+.form_title {
+    color: black;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-family: “Comic Sans MS”, “Comic Sans”, initial;
+}
+
+.form__input-group {
+    margin-bottom: 0rem;
+}
+.form__input {
+    width: 100%;
+    outline: none;
+    display: block;
+    font-size: 22px;
+    padding: 0.75rem;
+    background: #eeeeee;
+    box-sizing: border-box;
+    border-radius: var(--border-radius);
+    border: 1px solid #dddddd;
+}
+
+.form__input:focus {
+    border-color: var(--color-primary);
+    background: #ffffff;
+}
+
+.form__button, .form__input_mini{
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 1.3rem 2rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #000000;
+    border: none;
+    border-radius: var(--border-radius);
+    outline: none;
+    cursor: pointer;
+    background: var(--color-primary);
+}
+
+.form__button:hover {
+    padding: 2rem 3rem; 
+    transition-duration: 0.2s;
+    background: var(--color-primary-dark);
+}
+
+.form__button:active {
+    transform: scale(0.98);
+}
+select{
+    float:left;
+    width: 40%;
+    height: 60px;
+    text-align: center;
+    font-size: 22px;
+    
+    border-radius: var(--border-radius);
+}
+
+.drops{
+    display:flex;
+    size: 35px;
+    margin-bottom: 1rem;
+}
+
+.dateHead{
+    margin: none;
+    font-size: 15px;
+    margin-top: 5px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
+}

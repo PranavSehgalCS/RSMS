@@ -26,25 +26,47 @@ export class ViewProductComponent {
       this.router.navigate(['/login']);
     }
   }
+  private deletedCode:string= "";
   public productArray: Products[] = [];
-
+  public headNum:number = this.productArray.length;
   ngOnInit() {
     this.proService.getProducts("null").subscribe(res => {
       this.productArray = res;
+      this.headNum = this.productArray.length; 
     });
   }
 
-  viewLocation(pcodeParam:string){
-    this.router.navigate(['/products/viewproduct'],{queryParams:{pcode:pcodeParam}});
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+  async viewLocation(pcodeParam:string){
+    await this.delay(5);
+    if(this.deletedCode!=pcodeParam){
+      this.proService.getProducts(pcodeParam).subscribe(res => {
+        if(res.pop()!=undefined){
+          this.router.navigate(['/products/viewproduct'],{queryParams:{pcode:pcodeParam}});
+        }
+      });
+    }else{
+      this.deletedCode="";
+    }
   }
   editLocation(pcodeParam:string){
     this.router.navigate(['/products/edit'],{queryParams:{pcode:pcodeParam}});
   }
   
-  deleteCompany(pcode:string, pname:string){
+  deleteProduct(pcode:string, pname:string){
+    this.deletedCode = pcode;
     if(confirm("Are you sure you want to delete the product :\n\n" +pcode+' : '+pname)){
-      if(this.proService.deleteCompany(pcode,pname)){
-        location.reload()
+      if(this.proService.deleteProduct(pcode,pname)){
+        var remElem = document.getElementById(pcode);
+        if(remElem!=null){
+          if(remElem.parentNode!=null){
+            remElem.parentNode.removeChild(remElem);
+            this.headNum-=1;
+          }
+        }
+
       }else{
         alert("ERROR!!!\n Could Not Delete Company");
       }

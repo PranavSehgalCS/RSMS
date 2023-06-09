@@ -6,11 +6,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-//import { LoginComponent } from './components/Account_Components/login/login.component';
-//import { SignupComponent } from './components/Account_Components/signup/signup.component';
-//import { AccPageComponent } from './components/Account_Components/acc-page/acc-page.component';
-
-
 import { NavbarComponent } from './components/Navigation_Components/navbar/navbar.component';
 import { DashboardComponent } from './components/Navigation_Components/dashboard/dashboard.component';
 
@@ -21,7 +16,10 @@ import { CreateCategoryComponent } from './components/Category_Components/create
 import { ViewCompanyComponent } from './components/Company_Component/view-company/view-company.component';
 import { EditCompanyComponent } from './components/Company_Component/edit-company/edit-company.component';
 import { CreateCompanyComponent } from './components/Company_Component/create-company/create-company.component';
+
 import { ViewProductComponent } from './components/Product_Components/view-product/view-product.component';
+import { EditProductComponent } from './components/Product_Components/edit-product/edit-product.component';
+import { CreateProductComponent } from './components/Product_Components/create-product/create-product.component';
 
 
 @NgModule({
@@ -32,10 +30,12 @@ import { ViewProductComponent } from './components/Product_Components/view-produ
     ViewCompanyComponent,
     ViewCategoryComponent,
     CreateCategoryComponent,
+    CreateCompanyComponent,
     EditCategoryComponent,
     EditCompanyComponent,
-    CreateCompanyComponent,
-    ViewProductComponent
+    ViewProductComponent,
+    EditProductComponent,
+    CreateProductComponent
     ],
   imports: [
     FormsModule,
