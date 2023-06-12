@@ -11,4 +11,5 @@ public interface CompanyDAO{
     Boolean deleteCompany(int coid, String coname) throws IOException;
     Company createCompany(String coname, String codesc) throws IOException;
     Company updateCompany(int id, String newName, String newDesc) throws IOException;
+    Boolean companyNameExists(String caname) throws IOException;
 }

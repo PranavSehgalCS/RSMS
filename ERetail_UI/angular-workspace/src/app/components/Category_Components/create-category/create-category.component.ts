@@ -14,7 +14,7 @@ import { Categories } from 'src/app/model/categories';
 export class CreateCategoryComponent {
   constructor(
     private router:Router,
-    private CatService:CategoryService,
+    private catService:CategoryService,
     public messageService: MessageService,
     private CAService:CurrentAccountService
     ){
@@ -24,29 +24,42 @@ export class CreateCategoryComponent {
       this.CAService.setAccount(loadAccount);
       this.messageService.changeError("Enter Category Name & Desription To Continue");
       this.CAService.setTitle("Create Categories");
+      this.messageService.changeError("");
     }else{
       this.router.navigate(['/login']);
     }
   }
 
-  async createCategory(coname:string, codesc:string){
-    coname = coname.trim().replaceAll("'","");
-    codesc = codesc.trim().replaceAll("'","");;
-    if(coname.length==0){
+  private uname:boolean = false;
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+  async createCategory(caname:string, cadesc:string){
+    caname = caname.trim().replaceAll("'","");
+    cadesc = cadesc.trim().replaceAll("'","");
+    if(caname.length==0){
       this.messageService.changeError("Please Enter A Category Name");
-    }else if(codesc.length==0){
+    }else if(cadesc.length==0){
       this.messageService.changeError("Please Enter A Category Description");
-    }else if(coname.length>48){
+    }else if(caname.length>48){
       this.messageService.changeError("Category Name Can't Be Longer Than 48 Chars");
-    }else if(codesc.length>256){
+    }else if(cadesc.length>256){
       this.messageService.changeError("Category Description Can't Be Longer Than 256 Chars");
     }else{
       try{
-        var retVal = await this.CatService.createCategory(coname, codesc).subscribe();
-        if(retVal!=null){
-          alert("Category Created Successfully!")
+        await this.catService.existingCategoryName(caname).subscribe(res=>{this.uname = !res;});
+        await this.delay(50);
+        if(this.uname){
+          var retVal = await this.catService.createCategory(caname, cadesc).subscribe(); 
+          if(retVal!=null){
+            alert("Category Created Successfully!");
+            this.messageService.changeError("");
+          }else{
+            alert("Error While Creating Category");
+          }
         }else{
-          alert("Error While Creating Category")
+          this.messageService.changeError("Category Name Already Exists");
         }
       }catch{
         alert("Severe ERROR while creating Category");

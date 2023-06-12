@@ -30,6 +30,11 @@ export class ProductService {
         catchError(this.handleError<Products[]>([]))
       );
   }
+
+  existingProductName(pname:string): Observable<boolean>{
+    var finalUrl = this.proUrl+"/exists/"+pname;
+    return this.http.get<boolean>(finalUrl);
+  }
   
   getProductDates(pcode:string): Observable<string[]>{
     var finalUrl = this.proUrl+'/getdate/'+String(pcode);

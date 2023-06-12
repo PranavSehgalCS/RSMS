@@ -8,12 +8,11 @@ import org.springframework.stereotype.Repository;
 public interface ProductDAO {
     Boolean createProduct( String pname, String category, String company,
     int stock, double price, Date manufactureDate, Date expiryDate, String description) throws IOException;
-    String formatDate(String date) throws IOException;
     Product[] getProducts(String pcode) throws IOException;
-    Product[] getProductsByCompany(String company) throws IOException;
-    Product[] getProductsByCategory(String category) throws IOException;
     Boolean updateProduct( String pcode, String pname, String category, String company,
     int stock, double price, Date manufactureDate, Date expiryDate, String description) throws IOException;
     Boolean deleteProduct(String pcode, String pname) throws IOException;
+    String formatDate(String date) throws IOException;
+    Boolean productNameExists(String pcode) throws IOException;
 }
 

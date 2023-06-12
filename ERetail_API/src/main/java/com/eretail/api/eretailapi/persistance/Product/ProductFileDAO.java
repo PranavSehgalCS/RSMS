@@ -1,16 +1,14 @@
 package com.eretail.api.eretailapi.persistance.Product;
 import java.sql.Date;
+import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
-
 import java.io.IOException;
-import java.sql.Statement;
 import java.sql.DriverManager;
-
-import com.eretail.api.eretailapi.model.Product;
 import org.springframework.stereotype.Component;
+import com.eretail.api.eretailapi.model.Product;
 import org.springframework.beans.factory.annotation.Value;
+
 @Component
 public class ProductFileDAO implements ProductDAO{
     private String database;
@@ -21,9 +19,9 @@ public class ProductFileDAO implements ProductDAO{
     private ArrayList<Product> productArray;
     private ArrayList<Integer> avalibleID= new ArrayList<Integer>();
 
-    public ProductFileDAO( @Value("${spring.datasource.url}") String database,
-                                @Value("${spring.datasource.username}") String datauser,
-                                @Value("${spring.datasource.password}") String datapass
+    public ProductFileDAO(  @Value("${spring.datasource.url}") String database,
+                            @Value("${spring.datasource.username}") String datauser,
+                            @Value("${spring.datasource.password}") String datapass
                             ) throws IOException{
         this.database=database;
         this.datauser=datauser;
@@ -45,12 +43,14 @@ public class ProductFileDAO implements ProductDAO{
     String quote(String s){
         return (" '"+s+"', ");
     }
+
     String UpProd(String pcode, String field, String value, int i){
         if(i==0){
             return ("UPDATE products SET " + field + "= '" + value + "' WHERE pcode = '" + pcode + "';");
         }
         return ("UPDATE products SET " + field + "= " + value + " WHERE pcode = '" + pcode + "';"); 
     }
+
     private Boolean loadProducts() throws IOException{
         try {
             this.productArray = new ArrayList<Product>();
@@ -76,6 +76,7 @@ public class ProductFileDAO implements ProductDAO{
         }
         return false;
     }
+
     private Boolean saveProducts(String command) throws IOException{
         try {
             Statement statement =  DriverManager.getConnection(database,datauser,datapass).createStatement();
@@ -89,7 +90,7 @@ public class ProductFileDAO implements ProductDAO{
         }
     }
 
-
+    
     @Override
     public Boolean createProduct( String pname, String category, String company,
     int stock, double price, Date manufactureDate, Date expiryDate, String description) throws IOException{
@@ -129,18 +130,6 @@ public class ProductFileDAO implements ProductDAO{
             retVal[index]=i;
         }
         return retVal;
-    }
-
-    @Override
-    public Product[] getProductsByCompany(String company) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getProductsByCompany'");
-    }
-
-    @Override
-    public Product[] getProductsByCategory(String category) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getProductsByCategory'");
     }
 
     @Override
@@ -206,6 +195,17 @@ public class ProductFileDAO implements ProductDAO{
             System.out.println("Error while reformatting date --> " + e);
             return "00-00-00";
         }
+    }
+
+    @Override
+    public Boolean productNameExists(String pname) throws IOException{
+        if(!updated){updated = loadProducts();}
+        for(Product i: productArray){
+            if(i.getPname().equals(pname)){
+                return true;
+            }
+        }
+        return false;
     }
     
 }

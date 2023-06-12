@@ -20,6 +20,11 @@ export class CategoryService {
     this.messageService.add('CategoryService: ${message}');
   }
 
+  existingCategoryName(caname:string): Observable<boolean>{
+    var finalUrl = this.catUrl+"/exists/"+caname;
+    return this.http.get<boolean>(finalUrl);
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);

@@ -33,7 +33,7 @@ export class CreateProductComponent {
       loadAccount.getAccountCookies();
       this.CAService.setAccount(loadAccount);
       this.CAService.setTitle("Create Products");
-      this.messageService.changeError("{}");
+      this.messageService.changeError("");
     }else{
       this.router.navigate(['/login']);
     }
@@ -64,7 +64,6 @@ export class CreateProductComponent {
       if(retString.length>1){
         var retVal = (retVal+(Number(retString[1])/Math.pow(10,Number(retString[1].length))));
       }
-      this.CAService.setTitle(retVal.toString());
       return retVal;
     }else{
       return 0;
@@ -80,6 +79,11 @@ export class CreateProductComponent {
     return true;
   }
 
+  private uname:boolean = false;
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   async createProduct(pname:string, category:string, company:string, stock:number, 
     price:string, mnfdate:string, expdate:string, description:string){
     pname = pname.trim().replaceAll("'","");;
@@ -87,8 +91,8 @@ export class CreateProductComponent {
 
     if(pname.length==0){
       this.messageService.changeError("Please Enter A Product Name");
-    }else if(pname.length>32){
-      this.messageService.changeError("Product Name Can't Exceed 32 Characters");
+    }else if(pname.length>48){
+      this.messageService.changeError("Product Name Can't Exceed 48 Characters");  
     }else if(category=='?'){
       this.messageService.changeError("Please Select A Category");
       if(!(this.categoryArray.length>0)){
@@ -107,16 +111,27 @@ export class CreateProductComponent {
       this.messageService.changeError("Please Enter A Valid Manufacturing Date");
     }else if(!this.isValidDate(expdate)){
       this.messageService.changeError("Please Enter A Valid Expiry Date");
+    }else if(expdate<=mnfdate){
+      this.messageService.changeError("Expiry Date Must Be Later Than MNF-Date");
     }else if(description.length==0){
       this.messageService.changeError("Please Enter A Product Description");
     }else{
       try {
-        var retVal = await this.proService.createProduct(pname, category, company, stock, this.toNum(price), mnfdate, expdate, description);
-        if(retVal==true){
-          alert("Product '" +pname+"' Created Successfully!");
+        await this.proService.existingProductName(pname).subscribe(res=>{this.uname = !res;});
+        await this.delay(50);
+        if(this.uname){
+          var retVal = await this.proService.createProduct(pname, category, company, stock, this.toNum(price), mnfdate, expdate, description); 
+          if(retVal==true){
+            alert("Product Created Successfully!")
+            this.messageService.changeError("");
+          }else{
+            alert("Error While Creating Product")
+          }
+        }else{
+          this.messageService.changeError("Product Name Already Exists");
         }
       }catch (error) {
-        alert("An ERROR Occure, Please Try Later");
+        alert("An ERROR Occured, Please Try Later");
       }
     }
   }

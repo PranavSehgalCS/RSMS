@@ -23,7 +23,7 @@ export class EditCompanyComponent {
     if(loadAccount.isAccCookies()){
       loadAccount.getAccountCookies();
       this.CAService.setAccount(loadAccount);
-      this.messageService.changeError("{}")
+      this.messageService.changeError("")
       this.CAService.setTitle("Edit Companies");
     }else{
       this.router.navigate(['/login']);
@@ -53,6 +53,10 @@ export class EditCompanyComponent {
     });
   }
 
+  private uname:boolean = false;
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
 
   async editCompany(coname:string, codesc:string){
     coname =  coname.trim().replaceAll("'","");
@@ -69,15 +73,27 @@ export class EditCompanyComponent {
       }else if(codesc.length>256){
         this.messageService.changeError("Company Name Can't Exceed 256 Chars");
       }else{
-        this.ComService.updateCompany(this.curCoid, coname,codesc).subscribe( res =>{
-          var respVal = res;
-          if( (respVal.coname == coname) && (respVal.codesc == codesc) ){
-            alert("Company Updated Successfuly!");
+        if(this.curConame == coname){
+          this.uname=true;
+        }else{
+          await this.ComService.existingCompanyName(coname).subscribe(res=>{this.uname = !res;});
+        }
+        await this.delay(50);
+        if(this.uname){
+          var retVal = await this.ComService.updateCompany(this.curCoid, coname, codesc).subscribe(); 
+          if(retVal!=null){
+            this.curConame = coname;
+            this.messageService.changeError("");
+            alert("Company Updated Successfully!");
+          }else{
+            alert("Error While Creating Company");
           }
-        });
+        }else{
+          this.messageService.changeError("Company Name Already Exists");
+        }
       }
     }catch{
-
+      alert("Error While Updating Company");
     }
   }
 }

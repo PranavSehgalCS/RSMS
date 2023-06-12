@@ -20,6 +20,7 @@ export class CompanyService {
     this.messageService.add('CompanyService: ${message}');
   }
 
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
@@ -28,11 +29,16 @@ export class CompanyService {
     };
   }
 
+  existingCompanyName(coname:string): Observable<boolean>{
+    var finalUrl = this.comUrl+"/exists/"+coname;
+    return this.http.get<boolean>(finalUrl);
+  }
+  
   getCompanies(coid:number): Observable<Companies[]>{
     var finalUrl = this.comUrl; 
     if(coid!=-1){ finalUrl = this.comUrl+'/'+String(coid); }
     return this.http.get<Companies[]>(finalUrl).pipe(
-        tap(_ => this.log('fetched category of caid:' + String(coid))),
+        tap(_ => this.log('fetched company of caid:' + String(coid))),
         catchError(this.handleError<Companies[]>('getCompanies', []))
       );
   }

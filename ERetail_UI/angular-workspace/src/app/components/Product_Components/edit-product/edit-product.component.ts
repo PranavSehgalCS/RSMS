@@ -34,7 +34,7 @@ export class EditProductComponent {
       loadAccount.getAccountCookies();
       this.CAService.setAccount(loadAccount);
       this.CAService.setTitle("Edit Product");
-      this.messageService.changeError("{}");
+      this.messageService.changeError("");
     }else{
       this.router.navigate(['/login']);
     }
@@ -124,6 +124,11 @@ export class EditProductComponent {
     return true;
   }
 
+  private uname:boolean = false;
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   async updateProduct(pname:string, category:string, company:string, stock:number, 
     price:number, mnfdate:string, expdate:string, description:string){
     pname = pname.trim().replaceAll("'","");;
@@ -151,13 +156,30 @@ export class EditProductComponent {
       this.messageService.changeError("Please Enter A Valid Manufacturing Date");
     }else if(!this.isValidDate(expdate)){
       this.messageService.changeError("Please Enter A Valid Expiry Date");
+    }else if(expdate<=mnfdate){
+      this.messageService.changeError("Expiry Date Must Exceed MNF-Date");
     }else if(description.length==0){
       this.messageService.changeError("Please Enter A Product Description");
     }else{
       try {
-        var retVal = await this.proService.updateProduct( this.curPcode,pname, category, company, stock, price, mnfdate, expdate, description);
-        if(retVal==true){
-          alert("Product '" +pname+"' updated Successfully!");
+        if(this.curPname == pname){
+          this.uname = true;
+        }else{
+          await this.proService.existingProductName(pname).subscribe(res=>{this.uname = !res;});
+        }
+        await this.delay(50);
+        if(this.uname){
+          var retVal = await this.proService.updateProduct( this.curPcode,pname, category, company, stock, price, mnfdate, expdate, description);
+          if(retVal==true){
+            this.curPname=pname;
+            this.messageService.changeError("");
+            alert("Product '" +pname+"' updated Successfully!");
+            
+          }else{
+            alert("Error While Creating Product")
+          }
+        }else{
+          this.messageService.changeError("That Product Name Already Exists");
         }
       }catch (error) {
         alert("An ERROR Occured, Please Try Later");

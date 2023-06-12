@@ -14,16 +14,19 @@ public class AccountFileDAO implements AccountDAO{
     private String database;
     private String datauser;
     private String datapass;
+    private boolean allAdmin;
     private String getIdString = "SELECT MAX(id) AS maid FROM accounts ";
     private static int nextId; 
 
-    public AccountFileDAO(@Value("${spring.datasource.url}") String database ,
-                        @Value("${spring.datasource.username}") String datauser,
-                        @Value("${spring.datasource.password}") String datapass
+    public AccountFileDAO(  @Value("${accounts.alladmin}") Boolean allAdmin, 
+                            @Value("${spring.datasource.url}") String database ,
+                            @Value("${spring.datasource.username}") String datauser,
+                            @Value("${spring.datasource.password}") String datapass
                         ) throws IOException, SQLException {
         this.database = database;
         this.datauser = datauser;
         this.datapass = datapass;
+        this.allAdmin = allAdmin;
         AccountFileDAO.nextId = -1;
     }
 
@@ -67,10 +70,10 @@ public class AccountFileDAO implements AccountDAO{
             }
             int idVal = (int)(AccountFileDAO.nextId); 
             String values = Integer.toString( AccountFileDAO.nextId )+", '";
-            values+= account.getUsername() + "', '" +account.getPassword() + "', 'false'";
+            values+= account.getUsername() + "', '" +account.getPassword() + "', '"+allAdmin +"'" ;
             if(save(values,null,0)){
                 AccountFileDAO.nextId++;
-                return new Account( idVal, account.getUsername(), account.getPassword(), false);
+                return new Account( idVal, account.getUsername(), account.getPassword(), allAdmin);
             }
         }else{
             if(nextId<5 && i>0){
@@ -111,7 +114,7 @@ public class AccountFileDAO implements AccountDAO{
                 retvalAccount = new Account(2, "", " ", false);
             }
         } catch (Exception e) {
-            System.out.println("State -> BAD! "+ e);
+            System.out.println("Error While Getting Account -> "+ e);
         }
         return retvalAccount;
     }

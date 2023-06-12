@@ -43,6 +43,7 @@ public class CategoryController{
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
     @GetMapping("/{caid}")
     public ResponseEntity<Category[]>getCategoryPath(@PathVariable Integer caid){
         LOG.info("GET /categories/" + caid);
@@ -60,6 +61,24 @@ public class CategoryController{
         }
     }
     
+    @GetMapping("/exists/{caname}")
+    public ResponseEntity<Boolean>productExistance(@PathVariable String caname){
+
+        LOG.info("GET companies/exists/" + caname);
+        if(caname.length()<1){return null;}
+        try {
+            Boolean retVal  = this.categoryDao.categoryNameExists(caname);
+            if(retVal!=null ){
+                return new ResponseEntity<Boolean>(retVal ,HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("")
     public ResponseEntity<Category> createCategories(   @RequestParam(name = "caname", required = true) String caname, 
                                                         @RequestParam(name = "cadesc", required = true) String cadesc

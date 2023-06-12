@@ -1,11 +1,11 @@
 package com.eretail.api.eretailapi.controller;
 
-import java.io.IOException;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,6 +63,8 @@ public class ProductController {
         }
     }
 
+
+
     @GetMapping("/getdate/{pcode}")
     public ResponseEntity<String[]>getProductDate(@PathVariable String pcode){
         LOG.info("GET /products/getdate" + pcode);
@@ -83,6 +85,22 @@ public class ProductController {
         }
     }
     
+    @GetMapping("/exists/{pname}")
+    public ResponseEntity<Boolean>productExistance(@PathVariable String pname){
+        LOG.info("GET products/exists/" + pname);
+        if(pname.length()<1){return null;}
+        try {
+            Boolean retVal  = this.productDao.productNameExists(pname);
+            if(retVal!=null ){
+                return new ResponseEntity<Boolean>(retVal ,HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping("")
     public ResponseEntity<Boolean> createCompanies(     @RequestParam(name = "pname", required = true) String pname, 

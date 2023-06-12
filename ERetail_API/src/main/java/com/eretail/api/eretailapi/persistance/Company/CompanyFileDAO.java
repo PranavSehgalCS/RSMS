@@ -1,10 +1,10 @@
 package com.eretail.api.eretailapi.persistance.Company;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.ResultSet;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.sql.SQLException;
 import java.sql.DriverManager;
 
 import org.springframework.stereotype.Component;
@@ -143,5 +143,15 @@ public class CompanyFileDAO implements CompanyDAO{
         }
         return null;
     }
-    
+
+    @Override
+    public Boolean companyNameExists(String coname) throws IOException{
+        if(!updated){updated = loadCompanies();}
+        for(Company i: companyArray){
+            if(i.getConame().equals(coname)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

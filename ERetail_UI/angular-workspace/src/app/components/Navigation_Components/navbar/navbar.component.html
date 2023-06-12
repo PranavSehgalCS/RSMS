@@ -1,7 +1,7 @@
 
 <div class="topnav">
     <div *ngIf="isLoggedIn() && !isAdmin()">
-        <a [ngClass]="{'active': id === -1}" id="-1" routerLink="/dashboard_false" (click)="addClass(id=-1)">Dashboard2</a>
+        <a [ngClass]="{'active': id === -1}" id="-1" routerLink="/dashboard_false" (click)="addClass(id=-1)">Non-Admin Dashboard</a>
     </div> 
 
     <div *ngIf="isLoggedIn() && isAdmin()">

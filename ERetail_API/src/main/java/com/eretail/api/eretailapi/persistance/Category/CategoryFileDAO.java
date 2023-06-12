@@ -1,12 +1,11 @@
 package com.eretail.api.eretailapi.persistance.Category;
 
-import java.util.ArrayList;
+import java.sql.Statement;
 import java.sql.ResultSet;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.DriverManager;
-
 import org.springframework.stereotype.Component;
 import com.eretail.api.eretailapi.model.Category;
 import org.springframework.beans.factory.annotation.Value;
@@ -145,6 +144,18 @@ public class CategoryFileDAO implements CategoryDAO{
             }
         }
         return null;
+    }
+
+
+    @Override
+    public Boolean categoryNameExists(String caname) throws IOException{
+        if(!updated){updated = loadCategories();}
+        for(Category i: categoryArray){
+            if(i.getCaname().equals(caname)){
+                return true;
+            }
+        }
+        return false;
     }
     
 }

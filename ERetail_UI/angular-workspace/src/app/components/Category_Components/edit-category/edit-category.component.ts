@@ -18,7 +18,7 @@ export class EditCategoryComponent {
   constructor(
     private router:Router,
     private route:ActivatedRoute,
-    private CatService:CategoryService,
+    private catService:CategoryService,
     public messageService: MessageService,
     private CAService:CurrentAccountService
     ){
@@ -26,7 +26,7 @@ export class EditCategoryComponent {
     if(loadAccount.isAccCookies()){
       loadAccount.getAccountCookies();
       this.CAService.setAccount(loadAccount);
-      this.messageService.changeError("{}")
+      this.messageService.changeError("")
       this.CAService.setTitle("Edit Categories");
     }else{
       this.router.navigate(['/login']);
@@ -40,7 +40,7 @@ export class EditCategoryComponent {
 
   ngOnInit() {
     this.curCaid = Number(this.route.snapshot.queryParamMap.get('caid'));
-    this.CatService.getCategories(this.curCaid).subscribe(res => {
+    this.catService.getCategories(this.curCaid).subscribe(res => {
       var CurVal = res.pop();
       if(CurVal!=null){
         this.error = false;
@@ -55,7 +55,10 @@ export class EditCategoryComponent {
       }
     });
   }
-
+  private uname:boolean = false;
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
 
   async editCategory(caname:string, cadesc:string){
     caname =  caname.trim().replaceAll("'","");;
@@ -72,12 +75,24 @@ export class EditCategoryComponent {
       }else if(cadesc.length>256){
         this.messageService.changeError("Category Name Can't Exceed 256 Chars");
       }else{
-        this.CatService.updateCategory(this.curCaid, caname,cadesc).subscribe( res =>{
-          var respVal = res;
-          if( (respVal.caname == caname) && (respVal.cadesc == cadesc) ){
-            alert("Category Updated Successfuly!");
+        if(this.curCaname == caname){
+          this.uname=true;
+        }else{
+          await this.catService.existingCategoryName(caname).subscribe(res=>{this.uname = !res;});
+        }     
+        await this.delay(50);
+        if(this.uname){
+          var retVal = await this.catService.updateCategory(this.curCaid, caname, cadesc).subscribe(); 
+          if(retVal!=null){
+            this.curCaname = caname;
+            this.messageService.changeError("");
+            alert("Category Updated Successfully!");
+          }else{
+            alert("Error While Creating Category");
           }
-        });
+        }else{
+          this.messageService.changeError("Category Name Already Exists");
+        }
       }
     }catch{
 

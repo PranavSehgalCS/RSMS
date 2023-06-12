@@ -61,6 +61,20 @@ public class CompanyController {
         }
     }
 
+    @GetMapping("/exists/{coname}")
+    public ResponseEntity<Boolean>productExistance(@PathVariable String coname){
+
+        LOG.info("GET companies/exists/" + coname);
+        if(coname.length()<1){return null;}
+        try {
+            Boolean retVal  = (this.companyDao.companyNameExists(coname)==true);
+            return new ResponseEntity<Boolean>(retVal ,HttpStatus.OK);
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping("")
     public ResponseEntity<Company> updateCompanies( @RequestParam(name = "coid", required = true) Integer coid, 
                                                     @RequestParam(name = "coname" , required = true) String coname,

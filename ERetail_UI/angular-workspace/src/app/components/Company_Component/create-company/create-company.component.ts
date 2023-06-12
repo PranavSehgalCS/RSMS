@@ -20,6 +20,7 @@ export class CreateCompanyComponent {
     ){
     let loadAccount = new Account();
     if(loadAccount.isAccCookies()){
+      this.messageService.changeError("");
       loadAccount.getAccountCookies();
       this.CAService.setAccount(loadAccount);
       this.CAService.setTitle("Create Company");
@@ -28,10 +29,13 @@ export class CreateCompanyComponent {
       this.router.navigate(['/login']);
     }
   }
-
+  private uname:boolean = false;
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
   async createCompany(coname:string, codesc:string){
-    coname = coname.trim().replaceAll("'","");;
-    codesc = codesc.trim().replaceAll("'","");;
+    coname = coname.trim().replaceAll("'","");
+    codesc = codesc.trim().replaceAll("'","");
     if(coname.length==0){
       this.messageService.changeError("Please Enter A Company Name");
     }else if(codesc.length==0){
@@ -42,11 +46,18 @@ export class CreateCompanyComponent {
       this.messageService.changeError("Company Description Can't Be Longer Than 256 Chars");
     }else{
       try{
-        var retVal = await this.ComService.createCompany(coname, codesc).subscribe();
-        if(retVal!=null){
-          alert("Company Created Successfully!")
+        await this.ComService.existingCompanyName(coname).subscribe(res=>{this.uname = !res;});
+        await this.delay(50);
+        if(this.uname){
+          var retVal = await this.ComService.createCompany(coname, codesc).subscribe(); 
+          if(retVal!=null){
+            alert("Company Created Successfully!");
+            this.messageService.changeError("");
+          }else{
+            alert("Error While Creating Company");
+          }
         }else{
-          alert("Error While Creating Company")
+          this.messageService.changeError("Company Name Already Exists");
         }
       }catch{
         alert("Severe ERROR while creating Company");
