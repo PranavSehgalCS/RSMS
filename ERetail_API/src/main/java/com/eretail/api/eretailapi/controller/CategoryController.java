@@ -1,6 +1,7 @@
 package com.eretail.api.eretailapi.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -103,7 +104,7 @@ public class CategoryController{
     public ResponseEntity<Category> updateCategories(   @RequestParam(name = "caid", required = true) Integer coid, 
                                                         @RequestParam(name = "caname" , required = true) String coname,
                                                         @RequestParam(name = "cadesc" , required = true) String codesc
-                                                ){
+                                                ) throws SQLException{
         LOG.info("PUT /categories/" + coname + "/");
         try{
             Category update =  categoryDao.updateCategory(coid,coname,codesc);

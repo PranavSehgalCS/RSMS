@@ -9,6 +9,8 @@ import java.sql.DriverManager;
 
 import org.springframework.stereotype.Component;
 import com.eretail.api.eretailapi.model.Company;
+import com.eretail.api.eretailapi.persistance.Product.ProductFileDAO;
+
 import org.springframework.beans.factory.annotation.Value;
 
 @Component
@@ -95,6 +97,8 @@ public class CompanyFileDAO implements CompanyDAO{
         String cmd = "DELETE FROM companies WHERE coid = " + coid + " AND coname = '"+coname+"';";
         if(saveCompanies(cmd)){
             this.avalibleID.add(coid);
+            saveCompanies("UPDATE products SET company = '?' WHERE company = '"+coname+"';");
+            ProductFileDAO.updated = false;
             return true;
         }
         return false;
@@ -119,7 +123,7 @@ public class CompanyFileDAO implements CompanyDAO{
     }
 
     @Override
-    public Company updateCompany(int coid, String newName, String newDesc) throws IOException {
+    public Company updateCompany(int coid, String newName, String newDesc) throws IOException, SQLException {
         if(!updated){loadCompanies();}
         Boolean b1 = true;
         Boolean b2 = true;
@@ -133,6 +137,11 @@ public class CompanyFileDAO implements CompanyDAO{
         if(retVal!=null){
             if(!retVal.getConame().equals(newName)){
                 b1 = saveCompanies("UPDATE companies SET coname = '" + newName +"' WHERE coid = " + coid +";");
+                String loader = ("SELECT * FROM companies WHERE coid = " + coid + ";");
+                ResultSet load = DriverManager.getConnection(database,datauser,datapass).createStatement().executeQuery(loader);
+                String oldName = load.getString("coname");
+                saveCompanies("UPDATE products SET company = '" + newName +"' WHERE company = '" + oldName +"';"); 
+                ProductFileDAO.updated = false;
             }
             if(!retVal.getCodesc().equals(newDesc)){
                 b2 = saveCompanies("UPDATE companies SET codesc = '" + newDesc +"' WHERE coid = " + coid +";");

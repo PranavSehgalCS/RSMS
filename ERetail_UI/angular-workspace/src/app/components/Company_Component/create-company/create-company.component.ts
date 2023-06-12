@@ -36,6 +36,9 @@ export class CreateCompanyComponent {
   async createCompany(coname:string, codesc:string){
     coname = coname.trim().replaceAll("'","");
     codesc = codesc.trim().replaceAll("'","");
+    if(coname == '?'){
+      coname = '<\Q>'
+    }
     if(coname.length==0){
       this.messageService.changeError("Please Enter A Company Name");
     }else if(codesc.length==0){

@@ -35,7 +35,9 @@ export class ViewCategoryComponent implements OnInit {
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
-  
+ 
+  public headNum:number = this.categoryArray.length;
+
   async viewLocation(caidParam:number){
     await this.delay(5);
     if(this.deletedCaid!=caidParam){
@@ -51,6 +53,7 @@ export class ViewCategoryComponent implements OnInit {
   ngOnInit() {
       this.catService.getCategories(-1).subscribe(res => {
         this.categoryArray = res;
+        this.headNum = this.categoryArray.length;
       });
   }
   editLocation(caidparam:number){
@@ -60,7 +63,13 @@ export class ViewCategoryComponent implements OnInit {
     this.deletedCaid = caid;
     if(confirm("Are you sure you want to delete the product :\n\n" +caid+' : '+caname)){
       if(this.catService.deleteCategory(caid,caname)){
-        location.reload()
+        var remElem = document.getElementById(String(caid));
+        if(remElem!=null){
+          if(remElem.parentNode!=null){
+            remElem.parentNode.removeChild(remElem);
+            this.headNum-=1;
+          }
+        }
       }else{
         alert("ERROR!!!\n Could Not Delete Category");
       }

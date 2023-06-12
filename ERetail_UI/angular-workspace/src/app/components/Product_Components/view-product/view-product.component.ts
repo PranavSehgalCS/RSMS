@@ -66,7 +66,6 @@ export class ViewProductComponent {
             this.headNum-=1;
           }
         }
-
       }else{
         alert("ERROR!!!\n Could Not Delete Company");
       }

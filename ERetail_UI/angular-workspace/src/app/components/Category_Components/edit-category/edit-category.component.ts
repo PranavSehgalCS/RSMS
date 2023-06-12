@@ -61,8 +61,11 @@ export class EditCategoryComponent {
   }
 
   async editCategory(caname:string, cadesc:string){
-    caname =  caname.trim().replaceAll("'","");;
-    cadesc = cadesc.trim().replaceAll("'","");;
+    caname =  caname.trim().replaceAll("'","");
+    cadesc = cadesc.trim().replaceAll("'","");
+    if(caname == '?'){
+      caname = '<\Q>'
+    }
     try{
       if(this.error){
         this.messageService.changeError("Unable To Edit Category");

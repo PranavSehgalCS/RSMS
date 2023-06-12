@@ -15,7 +15,7 @@ public class ProductFileDAO implements ProductDAO{
     private String datauser;
     private String datapass;
     private static int nextID = 1;
-    private Boolean updated = false;
+    public static Boolean updated = false;
     private ArrayList<Product> productArray;
     private ArrayList<Integer> avalibleID= new ArrayList<Integer>();
 
@@ -27,7 +27,7 @@ public class ProductFileDAO implements ProductDAO{
         this.datauser=datauser;
         this.datapass=datapass;
         if(loadProducts()){
-            this.updated=true;
+            ProductFileDAO.updated=true;
         }
     }
 
@@ -82,7 +82,7 @@ public class ProductFileDAO implements ProductDAO{
             Statement statement =  DriverManager.getConnection(database,datauser,datapass).createStatement();
             int i = statement.executeUpdate(command);
             if(i<1){return false;}
-            this.updated = false;
+            ProductFileDAO.updated = false;
             return true;
         }catch(Exception e){
             System.out.println("\n Error While Saving Products ->  " + e); 

@@ -61,6 +61,9 @@ export class EditCompanyComponent {
   async editCompany(coname:string, codesc:string){
     coname =  coname.trim().replaceAll("'","");
     codesc = codesc.trim().replaceAll("'","");
+    if(coname == '?'){
+      coname = '<\Q>'
+    }
     try{
       if(this.error){
         this.messageService.changeError("Unable To Edit Company");

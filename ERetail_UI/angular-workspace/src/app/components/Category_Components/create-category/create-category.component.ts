@@ -38,6 +38,9 @@ export class CreateCategoryComponent {
   async createCategory(caname:string, cadesc:string){
     caname = caname.trim().replaceAll("'","");
     cadesc = cadesc.trim().replaceAll("'","");
+    if(caname == '?'){
+      caname = '<\Q>'
+    }
     if(caname.length==0){
       this.messageService.changeError("Please Enter A Category Name");
     }else if(cadesc.length==0){

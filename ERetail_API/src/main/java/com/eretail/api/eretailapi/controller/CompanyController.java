@@ -1,6 +1,7 @@
 package com.eretail.api.eretailapi.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -79,7 +80,7 @@ public class CompanyController {
     public ResponseEntity<Company> updateCompanies( @RequestParam(name = "coid", required = true) Integer coid, 
                                                     @RequestParam(name = "coname" , required = true) String coname,
                                                     @RequestParam(name = "codesc" , required = true) String codesc
-                                                ){
+                                                ) throws SQLException{
         LOG.info("PUT /companies /" + coname + "/");
         try{
             Company update =  companyDao.updateCompany(coid,coname,codesc);
@@ -120,7 +121,7 @@ public class CompanyController {
     public ResponseEntity<Boolean> deleteCategories(@RequestParam(name = "coid"  , required = true) Integer coid,
                                                     @RequestParam(name = "coname", required = true) String  coname
                                                     ){
-        LOG.info("DELETE /category/" + coid +":"+ coname);
+        LOG.info("DELETE /company/" + coid +":"+ coname);
         try{
             boolean deleted = companyDao.deleteCompany(coid,coname);
             if(deleted){

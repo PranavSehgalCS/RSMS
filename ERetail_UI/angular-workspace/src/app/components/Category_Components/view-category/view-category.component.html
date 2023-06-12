@@ -1,6 +1,6 @@
 <body>
-    <h1 class="container_head">{{categoryArray.length}} Categories Exist <a routerLink="/categories/create" class = "plus">+</a></h1>
-    <a (click)="viewLocation(cats.caid)" class = "info_line" *ngFor="let cats of categoryArray" >
+    <h1 class="container_head">{{headNum}} Categories Exist <a routerLink="/categories/create" class = "plus">+</a></h1>
+    <a id={{cats.caid}} (click)="viewLocation(cats.caid)" class = "info_line" *ngFor="let cats of categoryArray" >
         <div class = "id">{{cats.caid}}</div>
         <div class = "name" >{{cats.caname}}</div>
         <div class = "desc">{{cats.cadesc.substring(0,36)}}...</div>

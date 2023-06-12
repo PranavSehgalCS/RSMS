@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.DriverManager;
 import org.springframework.stereotype.Component;
 import com.eretail.api.eretailapi.model.Category;
+import com.eretail.api.eretailapi.persistance.Product.ProductFileDAO;
+
 import org.springframework.beans.factory.annotation.Value;
 
 @Component
@@ -95,6 +97,8 @@ public class CategoryFileDAO implements CategoryDAO{
         if(saveCategories(cmd)){
             updated=false;
             this.avalibleID.add(caid);
+            saveCategories("UPDATE products SET category = '?' WHERE category = '"+caname+"';");
+            ProductFileDAO.updated = false;
             return true;
         }
         return false;
@@ -120,7 +124,7 @@ public class CategoryFileDAO implements CategoryDAO{
     }
 
     @Override
-    public Category updateCategory(int caid, String newName, String newDesc) throws IOException {
+    public Category updateCategory(int caid, String newName, String newDesc) throws IOException, SQLException {
         Boolean b1 = true;
         Boolean b2 = true;
         Category retVal = null;
@@ -134,6 +138,11 @@ public class CategoryFileDAO implements CategoryDAO{
             if(!retVal.getCaname().equals(newName)){
                 updated=false;
                 b1 = saveCategories("UPDATE categories SET caname = '" + newName +"' WHERE caid = " + caid +";");
+                String loader = ("SELECT * FROM categories WHERE caid = " + caid + ";");
+                ResultSet load = DriverManager.getConnection(database,datauser,datapass).createStatement().executeQuery(loader);
+                String oldName = load.getString("caname");
+                saveCategories("UPDATE products SET category = '" + newName +"' WHERE category = '" + oldName +"';"); 
+                ProductFileDAO.updated = false;
             }
             if(!retVal.getCadesc().equals(newDesc)){
                 updated=false;

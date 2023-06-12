@@ -28,6 +28,7 @@ export class ViewCompanyComponent {
 
   public companyArray: Companies[] = [];
   public deletedCoid:number = -1;
+  public headNum:number = this.companyArray.length;
 
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
@@ -48,6 +49,7 @@ export class ViewCompanyComponent {
   ngOnInit() {
       this.comService.getCompanies(-1).subscribe(res => {
         this.companyArray = res;
+        this.headNum = this.companyArray.length;
       });
   }
   editLocation(coidparam:number){
@@ -58,7 +60,7 @@ export class ViewCompanyComponent {
     this.deletedCoid = coid;
     if(confirm("Are you sure you want to delete the product :\n\n" +coid+' : '+coname)){
       if(this.comService.deleteCompany(coid,coname)){
-        location.reload()
+        location.reload();
       }else{
         alert("ERROR!!!\n Could Not Delete Company");
       }

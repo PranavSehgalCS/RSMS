@@ -1,8 +1,6 @@
-
-<body>
-    
-    <h1 class="container_head">{{companyArray.length}} Companies Exist <a routerLink="/companies/create" class = "plus">+</a></h1>
-    <a (click)="viewLocation(coms.coid)" class = "info_line" *ngFor="let coms of companyArray" >
+<body> 
+    <h1 class="container_head">{{headNum}} Companies Exist <a routerLink="/companies/create" class = "plus">+</a></h1>
+    <a id={{coms.coid}} (click)="viewLocation(coms.coid)" class = "info_line" *ngFor="let coms of companyArray" >
         <div class = "id">{{coms.coid}}</div>
         <div class = "name" >{{coms.coname}}</div>
         <div class = "desc">{{coms.codesc.substring(0,33)}}...</div>
