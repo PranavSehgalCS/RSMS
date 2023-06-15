@@ -79,7 +79,6 @@ export class BillService {
   }
 
   createBill(bill:Bills):Observable<boolean>{
-    var retVal:string= 'false';
     const param = new HttpParams().append("name", bill.name)
                                   .append("mobile", bill.mobile)
                                   .append("date", bill.orderDate)
@@ -89,8 +88,7 @@ export class BillService {
     return this.http.post<boolean>(this.billUrl,null,{params:param});
   }
 
-  async updateBill(bill:Bills):Promise<Boolean>{
-    var retVal:boolean = false;
+  updateBill(bill:Bills):Observable<boolean>{
     const param = new HttpParams().append("bid", bill.bid)
                                   .append("name", bill.name)
                                   .append("mobile", bill.mobile)
@@ -98,9 +96,7 @@ export class BillService {
                                   .append("total", bill.total.toString())
                                   .append("paid", bill.status)
                                   .append("items", this.formatItems(bill.itemList));
-    await this.http.put<boolean>(this.billUrl,null,{params:param}).subscribe(res => {retVal = res;});
-    await this.delay(200);
-    return retVal;
+    return this.http.put<boolean>(this.billUrl,null,{params:param});
   }
 
   async deleteBill(bid:number):Promise<boolean>{

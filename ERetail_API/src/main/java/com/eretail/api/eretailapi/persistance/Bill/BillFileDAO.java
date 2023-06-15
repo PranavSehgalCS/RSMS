@@ -233,7 +233,6 @@ public class BillFileDAO implements BillDAO{
         for(miniProd i:act){
             retVal = retVal + i.toString();
         }
-        System.out.println("ToStringArray = " + retVal);
         return retVal;
     }
     private Boolean updateCart(miniProd[] newitems, int bid){
@@ -294,7 +293,6 @@ public class BillFileDAO implements BillDAO{
     public long formatDate(String indate) {
         try{
             long retVal = Long.parseLong(indate);
-            System.out.println("OLD : " + indate + ", NEW : "+ retVal);
             return retVal;
         }catch (Exception e) {
             System.out.println("Error while reformatting date --> " + e);

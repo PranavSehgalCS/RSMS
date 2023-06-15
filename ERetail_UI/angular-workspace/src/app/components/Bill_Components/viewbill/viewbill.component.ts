@@ -70,8 +70,7 @@ export class ViewbillComponent {
       });
     }
   }
-
-
+  
   properDate():string{
     var temp:Date = new Date(Number(this.curDate));
     var sp = temp.toString().split(" ");

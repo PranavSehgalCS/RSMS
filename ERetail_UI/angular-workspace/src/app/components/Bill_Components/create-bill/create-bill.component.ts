@@ -207,7 +207,6 @@ export class CreateBillComponent {
       if(success){
         alert("Your Sell Was Catalouged Successfully!");
         this.router.navigate(["/bills/view"]);
-        location.reload;
       }else{
         alert("ERROR While Creating Bill!")
       }
