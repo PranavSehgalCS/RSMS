@@ -22,6 +22,10 @@ import { EditProductComponent } from './components/Product_Components/edit-produ
 import { CreateProductComponent } from './components/Product_Components/create-product/create-product.component';
 import { ViewcompanyComponent } from './components/Company_Component/viewcompany/viewcompany.component';
 import { ViewcategoryComponent } from './components/Category_Components/viewcategory/viewcategory.component';
+import { CreateBillComponent } from './components/Bill_Components/create-bill/create-bill.component';
+import { ViewBillComponent } from './components/Bill_Components/view-bill/view-bill.component';
+import { EditBillComponent } from './components/Bill_Components/edit-bill/edit-bill.component';
+import { ViewbillComponent } from './components/Bill_Components/viewbill/viewbill.component';
 
 
 @NgModule({
@@ -39,7 +43,11 @@ import { ViewcategoryComponent } from './components/Category_Components/viewcate
     EditProductComponent,
     CreateProductComponent,
     ViewcompanyComponent,
-    ViewcategoryComponent
+    ViewcategoryComponent,
+    CreateBillComponent,
+    ViewBillComponent,
+    EditBillComponent,
+    ViewbillComponent
     ],
   imports: [
     FormsModule,

@@ -1,0 +1,81 @@
+<body>
+    <div *ngIf="!fullForm" class="container" style="margin-left:13.5rem; margin-right:8rem; height: 27rem;">
+        <form class="form" id="login">
+            <h1 class="form_title" style="font-size: 32px; margin-top: 30px;">Enter Customer Name & Number To Continue</h1>
+            <div id = "error_Message" class="form__message form__message--error">{{messageService.errorMsg}}</div>
+            <br>
+            <div class="form__input-group" style="margin-bottom: 1rem;">
+                <input #name  class="form__input" autofocus placeholder="Enter Customer Name">
+            </div>
+            <div class="form__input-group">
+                <input #mobile  class="form__input" autofocus placeholder="Enter Customer Mobile Number">
+            </div><br>
+            <div>
+                <button class="form__button" type="button" (click)="initForm(name.value,mobile.value)">Click To Start Sell!</button>
+            </div>
+        </form>
+    </div>
+
+    <div *ngIf="fullForm" class="container" style="max-width: 80rem; margin-left: 2%; min-height: 15rem;">
+        <h1 class="form_title">Current Order Details : </h1>
+
+        <div class = "line_container" style = " margin-bottom: 1rem;">
+            <div class="infodesc_container">
+                <div class = "info">Customer Name</div>
+                <div class = "desc">{{this.customer}}</div>
+            </div>
+            <div class="infodesc_container">
+                <div class = "info">Customer Mobile</div>
+                <div class = "desc">{{this.mobile}}</div>
+            </div>
+            <div class="infodesc_container">
+                <div class = "info">Order ID</div>
+                <div class = "desc">{{this.billID}}</div>
+            </div>
+            <div class="infodesc_container">
+                <div class = "info">Purchase Time</div>
+                <div class = "desc">{{sellDate[1]}}, {{sellDate[0]}}</div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div *ngIf="fullForm" class="container" style=" margin-right: 15%; margin-left: 15%; height:26rem;">
+        <form>
+            <h1 class="form_title">Add Items To Cart</h1>
+            <div id = "error_Message" class="form__message form__message--error">{{messageService.errorMsg}}</div>
+            <div class="line_container">
+                <div class="form__input-group">
+                    <select #prody (change)="setCurProd(prody.value); qtyIn.value='';" class="opt" style="width: 30rem;">
+                        <option value="?">Select Products</option>
+                        <option *ngFor="let prod of productArray" [value]="prod.pcode">
+                            {{prod.pname}}
+                        </option>
+                    </select>
+                </div>
+                <div class="form__input-group"  style="width: 25rem;margin-left:5rem;">
+                    <input #qtyIn min="0" value="" type="number" class="form__input" style="height:60px; text-align: center;"  autofocus placeholder="Enter Quantity (Max : {{this.maxVal}})">
+                </div>
+            </div>
+            
+            <button  class="form__button" type="button" (click)="addProduct(prody.value, qtyIn.value)">Add To Cart!</button>
+            <button  class="form__button" type="button" (click)="checkOut()">Click To Complete Sell!</button>
+        </form>
+
+
+    </div>
+
+    <div *ngIf="fullForm && showItems" class = "Item_List">
+        <div class="Item_List_Head">Current Total : <br><div class="money">Rs {{totals}}</div> (Paid: <button type="checkbox" [ngClass]="{'stat_t':status, 'stat_f':!status}"  (click)="payChange()">{{paytext}}</button>)</div>
+        <div class="info_line" *ngFor="let mpro of mapToArr()">
+            <div class = "pcode">{{mpro.pcode}}</div>
+            <div class = "name" >{{mpro.pname}}</div>
+            <div class = "cnc">Rs {{mpro.price}}</div>
+            <div class = "price">{{mpro.qty}} Items</div>
+            <div class = "cnc" style="width:15rem;"> Total Cost : {{formatPrice(mpro.price * mpro.qty)}}</div>
+            <a class="delete" routerLink="/products/delete" (click)="removeProduct(mpro.pcode)">Delete</a>
+        </div>
+        
+    </div>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+</body>

@@ -43,7 +43,7 @@ br {
     margin-bottom: 2rem;
     font-family: “Comic Sans MS”, “Comic Sans”, cursive;
 }
-.container_box{
+.container_box, .container_box:not(:hover){
     color: #ffffff;
     font-size: 30px;
     margin:1.2rem;
@@ -53,24 +53,27 @@ br {
     height: var(--bubble-upsize)*1.1;
     border-radius: var(--border-radius);
     box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+    transition-duration: 0.3s;
 }
 .container_box:hover{
     color: black;
     font-size: 35px;
-    padding: 1.2rem 1.2rem;
-    background-color: #ffb356; 
-    transition-duration: 0.25s;
+    padding: 1.2rem 1.5rem;
+    background-color: #ffb35f;
+    box-shadow: 5px 5px 90px rgba(0, 0, 0, 0.2); 
+    transition-duration: 0.3s;
 }
 
-button{
+button,  button:not(:hover){
     border:0px;
     font-size: 24px;
     cursor: pointer;
+    padding: 1rem 1rem;
     margin-top: 0.8rem;
     margin-bottom: 0.8rem;
     align-content: center;
-    padding: 1rem 1rem;
     justify-content: center; 
+    transition-duration: 0.4s;
     width: var(--bubble-sidesize);
     height: var(--bubble-upsize);
     background: var(--color-bubble);

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BillDAO {
     miniProd[] formatItems(String itemString);
-    String formatDate(String indate);
+    long formatDate(String indate);
     Boolean createBill(String name, String mobile, Date orderDate,double total, boolean status, miniProd[] items) throws IOException,SQLException;
     Bill[] getBills(int bid) throws IOException,SQLException;
     Boolean updateBill(int bid, String name, String mobile, Date orderDate,double total, boolean status, miniProd[] items) throws IOException,SQLException;

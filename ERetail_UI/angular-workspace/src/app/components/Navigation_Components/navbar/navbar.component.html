@@ -9,6 +9,7 @@
         <a [ngClass]="{'active': id === 1}" id="1" routerLink="/products/view" (click)="addClass(id=1)">Product :</a>
         <a [ngClass]="{'active': id === 2}" id="2" routerLink="/companies/view" (click)="addClass(id=2)">Company :</a>
         <a [ngClass]="{'active': id === 3}" id="3" routerLink="/categories/view" (click)="addClass(id=3)">Category :</a>
+        <a [ngClass]="{'active': id === 7}" id="7" routerLink="/bills/view" (click)="addClass(id=7)">Bills :</a>
     </div>
     <div *ngIf="isLoggedIn()">
         <needsLogout class="logout" [ngClass]="{'active': id === 5}" id="=" routerLink="/login" (click)="logout()">Logout<br></needsLogout>
@@ -17,11 +18,12 @@
     <div *ngIf="!isLoggedIn()">
         <needsLogin class="login"  [ngClass]="{'active': id === 6}" id="6" routerLink="/login" (click)="addClass(id=6)">Login</needsLogin>
     </div>
-    <a *ngIf="isAdmin()" [ngClass]="{'active': id === 7}" id="7" routerLink="/adminOrders" (click)="addClass(id=7)">HOLDER</a>
 
 </div>
 
 <!--
+id -1 = false dashboard
+
 id 0 = dashboard
 id 1 = Product Dropdown 
 id 2 = Company Dropdown
@@ -30,5 +32,6 @@ id 3 = Category Dropdown
 id 4 = Account page
 id 5 = logout
 id 6 = login
-id 7 =
+id 7 = Bill Dropdows
+id 8 = Holder
 -->

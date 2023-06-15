@@ -32,6 +32,10 @@ export class DashboardComponent {
     this.titleService.setTitle(JSON.stringify(this.CAService.getAccount()));
   }
 
+  async logoutButton(){
+    this.CAService.logout();
+    this.directButton('login',4);
+  }
   async directButton(page:String,id:number){
     setCookie('nav_id',id);
     if(page!="null"){

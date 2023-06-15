@@ -14,9 +14,10 @@
     text-align: center;
     padding: 24px 24px;
     border-radius: 10px;
-    max-width: 175px;
+    max-width: 120px;
     display: block;
-    background-color: #aed9ff;
+    min-width:90px;
+    background-color: #a2d2fc;
     font-family: “Comic Sans MS”, “Comic Sans”;
 }
 

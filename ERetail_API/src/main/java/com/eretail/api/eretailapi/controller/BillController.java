@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -91,10 +90,9 @@ public class BillController {
                                                 ) throws IOException, ParseException, SQLException{
         LOG.info("POST /bills/"+name + ":" + date); 
         try{
-            System.out.println("\n\nITEMS : " + itemString + "\n\n");
             miniProd[] formattedItems = this.billDao.formatItems(itemString);
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            Date orderDate = new java.sql.Date(sdf.parse(billDao.formatDate(date)).getTime());
+            Date orderDate = new Date(billDao.formatDate(date));
+            System.out.println("Date : " + orderDate.toString());
             Boolean newBill = billDao.createBill(name, mobile, orderDate,total, status, formattedItems);
             if(newBill != null && newBill!=false){
                 return new ResponseEntity<Boolean>(newBill, HttpStatus.CREATED);
@@ -121,10 +119,8 @@ public class BillController {
                                                 ) throws IOException, ParseException, SQLException{
         LOG.info("PUT /bills/"+name + ":" + date); 
         try{
-            System.out.println("\n\nITEMS : " + itemString + "\n\n");
             miniProd[] formattedItems = this.billDao.formatItems(itemString);
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            Date orderDate = new java.sql.Date(sdf.parse(billDao.formatDate(date)).getTime());
+            Date orderDate = new Date(billDao.formatDate(date));
             Boolean newBill = billDao.updateBill(bid,name, mobile, orderDate,total, status, formattedItems);
             if(newBill != null && newBill!=false){
                 return new ResponseEntity<Boolean>(newBill, HttpStatus.CREATED);

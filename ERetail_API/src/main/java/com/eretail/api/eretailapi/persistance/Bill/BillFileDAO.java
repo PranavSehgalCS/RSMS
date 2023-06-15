@@ -11,6 +11,8 @@ import java.sql.DriverManager;
 import com.eretail.api.eretailapi.model.Bill;
 import org.springframework.stereotype.Component;
 import com.eretail.api.eretailapi.model.miniProd;
+import com.eretail.api.eretailapi.persistance.Product.ProductFileDAO;
+
 import org.springframework.beans.factory.annotation.Value;
 
 @Component
@@ -137,11 +139,20 @@ public class BillFileDAO implements BillDAO{
     private Boolean createCart(miniProd[] items, int cartid){
         try{
             String cmd = "";
+            String cmd2 = "";
+            String loader = "";
+            ResultSet load = null;
             Boolean retVal = true;
             for(miniProd mpro: items){
-                cmd = "INSERT INTO cart VALUES("+cartid+ qot(mpro.getPcode()) + qot(mpro.getPname()) + ", " + mpro.getPrice() + ", "  + mpro.getQty() + ");";
-                retVal = (retVal && saveBills(cmd));
+                loader = "SELECT * FROM products WHERE pcode = '" + mpro.getPcode() + "';";   
+                load = DriverManager.getConnection(database,datauser,datapass).createStatement().executeQuery(loader);
+                if(load.next()){
+                    cmd = "INSERT INTO cart VALUES("+cartid+ qot(mpro.getPcode()) + qot(mpro.getPname()) + ", " + mpro.getPrice() + ", "  + mpro.getQty() + ");";
+                    cmd2 = "UPDATE products SET stock = " + (load.getInt("stock") - mpro.getQty()) + " WHERE pcode = '" +mpro.getPcode()+ "' ;";   
+                    retVal = (retVal && saveBills(cmd) && saveBills(cmd2));       
+                }
             }
+            if(retVal){ProductFileDAO.updated=false;}
             return retVal;
         }catch(Exception e){
             System.out.println("\nERROR while creating cart -> "+e);
@@ -255,14 +266,14 @@ public class BillFileDAO implements BillDAO{
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public String formatDate(String indate) {
+    public long formatDate(String indate) {
         try{
-            String[] spliten = indate.split("-");
-            String retVal = spliten[2] + "-" + spliten[1] + "-" + spliten[0];
+            long retVal = Long.parseLong(indate);
+            System.out.println("OLD : " + indate + ", NEW : "+ retVal);
             return retVal;
         }catch (Exception e) {
             System.out.println("Error while reformatting date --> " + e);
-            return "00-00-00";
+            return 0;
         }   
     }
 
