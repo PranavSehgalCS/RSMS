@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.sql.SQLException;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import org.springframework.stereotype.Component;
 import com.eretail.api.eretailapi.model.Category;
@@ -39,7 +40,9 @@ public class CategoryFileDAO implements CategoryDAO{
             this.categoryArray = new ArrayList<Category>();
             Category arrayObj = new Category(0,null, null);
             String loader = "SELECT * FROM categories ORDER BY caid";
-            ResultSet load = DriverManager.getConnection(database,datauser,datapass).createStatement().executeQuery(loader);
+            Connection conn = DriverManager.getConnection(database,datauser,datapass);
+            Statement stat = conn.createStatement(); 
+            ResultSet load = stat.executeQuery(loader);
             while(load.next()){
                 arrayObj = new Category(load.getInt("caid"),
                                         load.getString("caname"),
@@ -47,6 +50,9 @@ public class CategoryFileDAO implements CategoryDAO{
                 categoryArray.add(arrayObj);
             }
             CategoryFileDAO.nextID = (arrayObj.getCaid()+1);
+            load.close();
+            stat.close();
+            conn.close();
             return true;
         }catch (Exception e) {
             System.out.println("\n Error While Loading Categories->  "+e);

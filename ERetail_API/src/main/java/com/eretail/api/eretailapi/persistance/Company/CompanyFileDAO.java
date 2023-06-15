@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.sql.SQLException;
+import java.sql.Connection;
 import java.sql.DriverManager;
 
 import org.springframework.stereotype.Component;
@@ -40,7 +41,9 @@ public class CompanyFileDAO implements CompanyDAO{
             this.companyArray = new ArrayList<Company>();
             String loader = "SELECT * FROM companies ORDER BY coid";
             Company arrayObj = new Company(0,null, null);
-            ResultSet load = DriverManager.getConnection(database,datauser,datapass).createStatement().executeQuery(loader);
+            Connection conn = DriverManager.getConnection(database,datauser,datapass);
+            Statement stat = conn.createStatement(); 
+            ResultSet load = stat.executeQuery(loader);
             while(load.next()){
                 arrayObj= new Company(load.getInt("coid"),
                                             load.getString("coname"),
@@ -48,6 +51,9 @@ public class CompanyFileDAO implements CompanyDAO{
                 companyArray.add(arrayObj);
             }
             CompanyFileDAO.nextID = (arrayObj.getCoid()+1);
+            load.close();
+            stat.close();
+            conn.close();
             return true;
         }catch (Exception e) {
             System.out.println("\n Error While Loading  Companies->  "+e);

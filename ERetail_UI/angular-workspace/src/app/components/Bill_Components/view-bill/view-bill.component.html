@@ -1,1 +1,33 @@
-<p>view-bill works!</p>
+<body>
+    <style>
+        .edit_here{
+            float:right;
+            width: 9rem;
+            height: 0.5rem;
+            padding-top: 2.5rem;
+            padding-bottom: 4rem;
+            background-color: #8e91ff;;
+        }
+        .edit_here:hover{
+            border-radius: 40px;
+            height: 0.25rem;
+            margin: 10px;
+            font-size: 26px;
+            color:white;
+            background-color: #4677ff;
+            transition-duration: 0.25s;
+        }
+    </style>
+
+    <h1 class="container_head">{{headNum}} Bills Exist Exist <a routerLink="/bills/create" class = "plus">+</a></h1>
+   <div *ngFor="let ubi of billArray"  > 
+        <a *ngIf="loadShow>=3" id="{{ubi.bid}}" class = "info_line" (click)="viewLocation(ubi.bid)" >
+        <div class = "pcode" style="width: 5rem;" >{{ubi.bid}}</div>
+        <div class = "name"  style="width: 12rem;">{{ubi.name}}</div>
+        <div class = "cnc" style="width: 10rem; height:0px; margin-top:10px;">{{btos(ubi.status)}}</div>
+        <div class = "price" style="width: 14rem;">{{ubi.itemList.length}} Items Bought</div>
+        <div class = "cnc" style="width: 15rem;"> Rs {{ubi.total}}</div>
+        <a class="edit_here"(click)="editLocation(ubi.bid)" >Edit Bill</a>
+        </a>
+    </div>
+</body>

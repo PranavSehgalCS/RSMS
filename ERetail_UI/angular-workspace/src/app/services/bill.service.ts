@@ -4,7 +4,7 @@ import { miniProd } from '../model/miniProd';
 import { Products } from '../model/products';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,12 @@ export class BillService {
     private messageService: MessageService
   ){}
   
+  private handleError<T>(result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      return of(result as T);
+    };
+  }
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
@@ -41,13 +47,18 @@ export class BillService {
     return this.retInt
   }
 
-  async getBills(bid:number):Promise<Bills[]>{
-    var retVal:Bills[] = [];
-    var finalUrl:string = this.billUrl;
-    if(bid!=0){finalUrl = finalUrl + "/" +String(bid);}
-    await this.http.get<Bills[]>(finalUrl).pipe().subscribe(res =>{retVal = res;});
-    await this.delay(200);
-    return retVal;
+  getBills(bid:number):Observable<Bills[]>{
+    var finalUrl:string = this.billUrl + "/" +String(bid);
+    return this.http.get<Bills[]>(finalUrl).pipe(catchError(this.handleError<Bills[]>([]))
+    );
+  }
+  getCart(cartID:number):Observable<miniProd[][]>{
+    var finalUrl:string = this.billUrl + "/carts/" + String(cartID);
+    return this.http.get<miniProd[][]>(finalUrl).pipe(catchError(this.handleError<miniProd[][]>()));
+  }
+  getStatus(bid:number):Observable<boolean[]>{
+    var finalUrl:string = this.billUrl + "/bools/" + String(bid);
+    return this.http.get<boolean[]>(finalUrl).pipe(catchError(this.handleError<boolean[]>([]))); 
   }
 
   private formatItems(items:miniProd[]):string{

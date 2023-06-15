@@ -1,1 +1,33 @@
-<p>viewbill works!</p>
+<body>
+    <div class="container" style="height:34rem;">
+        <div class = "infoid">
+            <div class = "nam"> Sell ID :</div>
+            <div class = "val">{{this.curBid}}</div>
+        </div>  
+        <div class = "infoid">
+            <div class = "nam">Customer Name :</div>
+            <div class = "val">{{this.curName}}</div>
+        </div>
+        <div class = "infoid">
+            <div class = "nam">Customer Mobile:</div>
+            <div class = "val">{{this.curMobile}}</div>
+        </div>
+        <div class = "infoid">
+            <div class = "nam">Purchase Date :</div>
+            <div class = "val">{{properDate()}}</div>
+        </div>
+        <div class = "infoid">
+            <div class = "nam">Paid Status:</div>
+            <div class = "val">{{this.curStatus}}</div>
+        </div>
+        <div class = "infoid">
+            <div class = "nam">Total Price :</div>
+            <div class = "val">Rs {{this.curTotal}}</div>
+        </div>
+        <div class = "infoid">
+            <div class = "nam">Items Bought :</div>
+            <div class = "val">{{this.curItemList.length}}</div>
+        </div>  
+        <button style="margin-top: 50px;margin-bottom: 30px;" (click)="editLocation(this.curBid)" class="form__button" type="button" Click To Edit>Click To Go To Edit</button>
+    </div>
+</body>

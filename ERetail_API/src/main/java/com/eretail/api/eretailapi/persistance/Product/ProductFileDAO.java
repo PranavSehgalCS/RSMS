@@ -1,4 +1,5 @@
 package com.eretail.api.eretailapi.persistance.Product;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -55,7 +56,9 @@ public class ProductFileDAO implements ProductDAO{
         try {
             this.productArray = new ArrayList<Product>();
             String loader = "SELECT * FROM products ORDER BY pcode;";
-            ResultSet load = DriverManager.getConnection(database,datauser,datapass).createStatement().executeQuery(loader);
+            Connection conn = DriverManager.getConnection(database,datauser,datapass);
+            Statement stat = conn.createStatement(); 
+            ResultSet load = stat.executeQuery(loader);
             Product arrayObj = null;
             while(load.next()){
                 arrayObj= new Product(  load.getString("pcode"),
@@ -70,6 +73,9 @@ public class ProductFileDAO implements ProductDAO{
                 productArray.add(arrayObj);
             }
             if(arrayObj!=null){ProductFileDAO.nextID = (deformatPcode(arrayObj.getPcode())+1);}
+            load.close();
+            stat.close();
+            conn.close();
             return true;
         } catch (Exception e) {
             System.out.println("\n Error While Loading Products ->  " + e);
@@ -83,6 +89,7 @@ public class ProductFileDAO implements ProductDAO{
             int i = statement.executeUpdate(command);
             if(i<1){return false;}
             ProductFileDAO.updated = false;
+            statement.close();
             return true;
         }catch(Exception e){
             System.out.println("\n Error While Saving Products ->  " + e); 

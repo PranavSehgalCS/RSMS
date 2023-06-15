@@ -1,6 +1,8 @@
 package com.eretail.api.eretailapi.controller;
 
+import java.util.Map;
 import java.sql.Date;
+import java.util.TreeMap;
 import java.sql.SQLException;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -27,6 +29,8 @@ import com.eretail.api.eretailapi.persistance.Bill.BillFileDAO;
 @RequestMapping("bills")
 public class BillController {
     private BillDAO billDao;
+    public static Map<Integer,miniProd[]> mpro = new TreeMap<Integer,miniProd[]>();
+    public static Map<Integer,Boolean> bolo = new TreeMap<Integer,Boolean>();
     private static final Logger LOG = Logger.getLogger(BillController.class.getName());
     
     public BillController(BillDAO billDao){
@@ -39,6 +43,9 @@ public class BillController {
         try {
             Bill[] retVal = this.billDao.getBills(-1);
             if(retVal!=null){
+                for(Bill i:retVal){
+                    System.out.println(i.isPaid());
+                }
                 return new ResponseEntity<Bill[]>(retVal ,HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -77,11 +84,52 @@ public class BillController {
         }
     }
 
-    // ',' --> 'ྠ' (4000)
-    // ';' --> 'ྡ' (4001)
-    // 'd' --> 'Y,M,D'
+    @GetMapping("/bools/{bid}")
+    public ResponseEntity<boolean[]> getBools(@PathVariable int bid ){
+        LOG.info("GET /products/bools/"+bid);
+        try {
+            if(bid==-1){
+                int index=-1;
+                boolean[] retVal =  new boolean[bolo.size()];
+                for(boolean i:bolo.values()){
+                    index++;
+                    retVal[index] = i;
+                }
+                return new ResponseEntity<boolean[]>(retVal,HttpStatus.OK);
+            }
+            boolean[] retVal = new boolean[1];
+            retVal[0] = bolo.get(bid);
+            return new ResponseEntity<boolean[]>(retVal,HttpStatus.OK);
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+ 
+    @GetMapping("/carts/{bid}")
+    public ResponseEntity<miniProd[][]> getCart(@PathVariable int bid ){
+        LOG.info("GET /products/cart/"+bid);
+        try {
+            if(bid==-1){
+                int index=-1;
+                miniProd[][] retVal =  new miniProd[mpro.size()][];
+                for(miniProd[] i:mpro.values()){
+                    index++;
+                    retVal[index] = i;
+                }
+                return new ResponseEntity<miniProd[][]>(retVal,HttpStatus.OK);
+            }
+            miniProd[][] retVal = new miniProd[1][];
+            retVal[0] = mpro.get(bid);
+            return new ResponseEntity<miniProd[][]>(retVal,HttpStatus.OK);
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     @PostMapping("")
-    public ResponseEntity<Boolean> createNewBill(   @RequestParam(required = true, name = "name"  ) String name, 
+    public ResponseEntity<Boolean> createNewBill(@RequestParam(required = true, name = "name"  ) String name, 
                                                     @RequestParam(required = true, name = "mobile") String mobile,
                                                     @RequestParam(required = true, name = "date"  ) String date,
                                                     @RequestParam(required = true, name = "total" ) double total,

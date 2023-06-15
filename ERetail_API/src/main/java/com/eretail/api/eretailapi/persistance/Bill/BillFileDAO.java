@@ -1,13 +1,16 @@
 package com.eretail.api.eretailapi.persistance.Bill;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.TreeMap;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.DriverManager;
 
+import com.eretail.api.eretailapi.controller.BillController;
 import com.eretail.api.eretailapi.model.Bill;
 import org.springframework.stereotype.Component;
 import com.eretail.api.eretailapi.model.miniProd;
@@ -44,7 +47,9 @@ public class BillFileDAO implements BillDAO{
         try {
             ArrayList<miniProd> retHold = new ArrayList<miniProd>();
             String loader = "SELECT * FROM cart WHERE cartid = "+id+" ORDER BY pcode;";
-            ResultSet load = DriverManager.getConnection(database,datauser,datapass).createStatement().executeQuery(loader);
+            Connection conn = DriverManager.getConnection(database,datauser,datapass);
+            Statement stat = conn.createStatement(); 
+            ResultSet load = stat.executeQuery(loader);
             miniProd arrayObj = null;
             while(load.next()){
                 arrayObj = new miniProd(load.getInt("cartid"),
@@ -60,6 +65,9 @@ public class BillFileDAO implements BillDAO{
                 index++;
                 retVal[index] = i;
             }
+            load.close();
+            stat.close();
+            conn.close();
             return retVal;
         } catch (Exception e) {
             System.out.println("ERROR While Loading Cart --> " + e);
@@ -69,20 +77,29 @@ public class BillFileDAO implements BillDAO{
     private Boolean loadBills(){
         try {
             this.billArray = new ArrayList<Bill>();
+            BillController.mpro = new TreeMap<Integer,miniProd[]>();
+            BillController.bolo = new TreeMap<Integer,Boolean>();
             String loader = "SELECT * FROM bills ORDER BY bid;";
-            ResultSet load = DriverManager.getConnection(database,datauser,datapass).createStatement().executeQuery(loader);
+            Connection conn = DriverManager.getConnection(database,datauser,datapass);
+            Statement stat = conn.createStatement(); 
+            ResultSet load = stat.executeQuery(loader);
             Bill arrayObj = null;
             while(load.next()){
                 arrayObj = new Bill(load.getInt("bid"),
                                     load.getString("name"),
                                     load.getString("mobile"),
-                                    load.getDate("time"),
+                                    new Date(load.getTimestamp("time").getTime()),
                                     load.getDouble("total"),
                                     load.getBoolean("status"),
                                     loadCart(load.getInt("bid")));
                 billArray.add(arrayObj);
+                BillController.mpro.put(arrayObj.getBid(), arrayObj.getItems());
+                BillController.bolo.put(arrayObj.getBid(), arrayObj.isPaid());
             }
             if(arrayObj!=null){BillFileDAO.nextID = arrayObj.getBid()+1;}
+            load.close();
+            stat.close();
+            conn.close();
             return true;
         } catch (Exception e) {
             System.out.println("Eror While Loading Bills --> "+e);
@@ -93,12 +110,14 @@ public class BillFileDAO implements BillDAO{
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private Boolean saveBills(String command) throws IOException{
-        System.out.println("Created Command :" +command);
         try {
-            Statement statement =  DriverManager.getConnection(database,datauser,datapass).createStatement();
+            Connection conn = DriverManager.getConnection(database,datauser,datapass);
+            Statement statement =  conn.createStatement();
             int i = statement.executeUpdate(command);
             if(i<1){return false;}
             BillFileDAO.updated = false;
+            conn.close();
+            statement.close();
             return true;
         } catch (Exception e) {
             System.out.println("\n Error While Saving Bill ->  " + e); 
@@ -143,15 +162,21 @@ public class BillFileDAO implements BillDAO{
             String loader = "";
             ResultSet load = null;
             Boolean retVal = true;
+            Connection conn = DriverManager.getConnection(database,datauser,datapass);
+            Statement stat = conn.createStatement();
             for(miniProd mpro: items){
-                loader = "SELECT * FROM products WHERE pcode = '" + mpro.getPcode() + "';";   
-                load = DriverManager.getConnection(database,datauser,datapass).createStatement().executeQuery(loader);
+                loader = "SELECT * FROM products WHERE pcode = '" + mpro.getPcode() + "';";
+                load = stat.executeQuery(loader);
                 if(load.next()){
                     cmd = "INSERT INTO cart VALUES("+cartid+ qot(mpro.getPcode()) + qot(mpro.getPname()) + ", " + mpro.getPrice() + ", "  + mpro.getQty() + ");";
                     cmd2 = "UPDATE products SET stock = " + (load.getInt("stock") - mpro.getQty()) + " WHERE pcode = '" +mpro.getPcode()+ "' ;";   
                     retVal = (retVal && saveBills(cmd) && saveBills(cmd2));       
                 }
             }
+            if(load!=null){load.close();}
+            stat.close();
+            conn.close();
+
             if(retVal){ProductFileDAO.updated=false;}
             return retVal;
         }catch(Exception e){

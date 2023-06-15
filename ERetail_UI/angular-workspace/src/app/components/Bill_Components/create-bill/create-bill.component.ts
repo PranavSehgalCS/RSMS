@@ -206,8 +206,8 @@ export class CreateBillComponent {
       await this.billService.delay(500);
       if(success){
         alert("Your Sell Was Catalouged Successfully!");
-        location.reload;
         this.router.navigate(["/bills/view"]);
+        location.reload;
       }else{
         alert("ERROR While Creating Bill!")
       }
