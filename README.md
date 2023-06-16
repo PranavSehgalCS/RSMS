@@ -1,24 +1,13 @@
-#!/bin/sh
+Author :      Pranav Sehgal
+Project :     RSMS - Retail Store Management System
+Description : A project made with Maven SpringBoot(Backend), Angular(Frontend) & Postgress(Database)
 
-a=1
+Files & Folders Included : 
 
-osascript -e 'tell application "Terminal" to do script "cd Desktop/Nile_Tech_Projects/RSMS/ERetail_UI/angular-workspace;ng serve --open;"'
+-->) Runapp : Automatically compiles and runs all frontend and backend components using terminal(Only Runs On Mac Desktop).
 
-osascript -e 'tell application "Terminal" to do script "cd Desktop/Nile_Tech_Projects/RSMS/ERetail_API; mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;mvn compile exec:java;"'
+-->) Killapp: Kills all running instances of the app.
 
-open  -a "Postgres"
-sleep 10;
+--> ERetail_UI : Folder containing the frontend component, made in Angular 15.1.5
 
-#osascript -e 'tell application "Terminal" to do script "cd /Applications/Postgres.app/Contents/Versions/15/bin/; psql -p5432 rsms_db"'
-
-
-
-cd "Desktop/Nile_Tech_Projects/RSMS/ERetail_UI/angular-workspace/.angular"
-
-sleep 60;
-
-while [ $a -le 2 ]
-do
-echo “\n\nAngular cache manually removed : ”
-rm -r cache;sleep 300;
-done
+--> ERetail_API: Folder containing the backend component, made in Java-11 implementing Apache-Maven-3.8.7
