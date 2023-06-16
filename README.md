@@ -1,6 +1,9 @@
 Author :      Pranav Sehgal
+
 Project :     RSMS - Retail Store Management System
+
 Description : A project made with Maven SpringBoot(Backend), Angular(Frontend) & Postgress(Database)
+
 
 Files & Folders Included : 
 
