@@ -102,7 +102,7 @@ public class BillFileDAO implements BillDAO{
             conn.close();
             return true;
         } catch (Exception e) {
-            System.out.println("Eror While Loading Bills --> "+e);
+            System.out.println("\nError While Loading Bills --> "+e);
             return false;
         }
     }

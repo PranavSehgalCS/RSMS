@@ -1,20 +1,28 @@
-Author :      Pranav Sehgal
+# RSMS
+    Author      :   Pranav Sehgal
+    
+    Project     :   RSMS - Retail Store Management System
 
-Project :     RSMS - Retail Store Management System
+    Description :   An Inventory and Purchase Management System
 
-Description : A project made with Maven SpringBoot(Backend), Angular(Frontend) & Postgress(Database)
+                    Backend uses Maven SpringBoot & Java.
+                    Frontend Uses Angular, TypeScript, HTML, CSS.
+
+                    Data is stored in a SQL Database using PostgesSQL.
+                    Data is transferred through servers in JSON formatting.
 
 
-Files & Folders Included : 
+# Files & Folders Provided :
 
---> Runapp : Automatically compiles and runs all frontend and backend components using terminal(Only Runs On Mac Desktop).
+    ERetail_UI : Contains all the frontend components, made in Angular 15.1.5 
+    ERetail_API: Contains all the backend components, made in Java-11, Apache-Maven-3.8.7
 
---> Killapp: Kills all running instances of the app.
+    .gitignore: Ensures module files like node_modules and angular cache arent tracked and published
 
---> ERetail_UI : Folder containing the frontend component, made in Angular 15.1.5
-
---> ERetail_API: Folder containing the backend component, made in Java-11 implementing Apache-Maven-3.8.7
-
---> .gitignore: Ensures module files like node_modules and angular cache arent tracked and published
-
-Note : Since Angular node_modules aren't included, please be sure to run npm install after download;
+    Run-App : 
+                Run-App     : Runs shell script in Mac terminal to run servers
+                Kill_Servers: Runs shell script in Mac terminal to kill running servers
+                Run_Tests   : Runs shell script in Mac terminal to execute test and coverage
+                Seperate Scripts :
+                                    Run_Maven   : Runs Backend Server
+                                    Run_Angular : Runs Frontend User Interface
